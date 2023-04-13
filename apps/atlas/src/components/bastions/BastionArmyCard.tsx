@@ -33,7 +33,7 @@ interface BastionArmyCardProps {
   blockNumber?: number;
   onAttackModeClick?: (army: Army) => void;
   onAttackClick?: (defendingArmy: Army) => void;
-  onMoveClick?: (army: Army, nextLocation: number) => void;
+  onMoveClick?: (army: Army, nextLocation: number | undefined) => void;
 }
 
 export const BastionArmyCard = ({

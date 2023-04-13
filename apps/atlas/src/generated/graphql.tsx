@@ -2,9 +2,15 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -207,7 +213,7 @@ export enum BastionLocationScalarFieldEnum {
   BastionId = 'bastionId',
   DefendingOrderId = 'defendingOrderId',
   LocationId = 'locationId',
-  TakenBlock = 'takenBlock'
+  TakenBlock = 'takenBlock',
 }
 
 export type BastionLocationWhereInput = {
@@ -464,7 +470,7 @@ export enum ExchangeRateScalarFieldEnum {
   LpAmount = 'lpAmount',
   SellAmount = 'sellAmount',
   TokenId = 'tokenId',
-  TokenReserve = 'tokenReserve'
+  TokenReserve = 'tokenReserve',
 }
 
 export type ExchangeRateWhereInput = {
@@ -959,7 +965,7 @@ export type NestedStringWithAggregatesFilter = {
 /** Order By Direction */
 export enum OrderByDirectionInput {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export enum OrderType {
@@ -978,7 +984,7 @@ export enum OrderType {
   Titans = 'Titans',
   Vitriol = 'Vitriol',
   TheFox = 'the_Fox',
-  TheTwins = 'the_Twins'
+  TheTwins = 'the_Twins',
 }
 
 export type Query = {
@@ -1036,7 +1042,6 @@ export type Query = {
   walletBalances: Array<WalletBalance>;
 };
 
-
 export type QueryAggregateRealmHistoryArgs = {
   cursor?: InputMaybe<RealmHistoryWhereUniqueInput>;
   orderBy?: InputMaybe<Array<RealmHistoryOrderByWithRelationInput>>;
@@ -1045,7 +1050,6 @@ export type QueryAggregateRealmHistoryArgs = {
   where?: InputMaybe<RealmHistoryWhereInput>;
 };
 
-
 export type QueryArmiesArgs = {
   orderBy?: InputMaybe<ArmyOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Float']>;
@@ -1053,11 +1057,9 @@ export type QueryArmiesArgs = {
   where?: InputMaybe<ArmyWhereInput>;
 };
 
-
 export type QueryBastionArgs = {
   id: Scalars['Float'];
 };
-
 
 export type QueryBastionLocationsArgs = {
   cursor?: InputMaybe<BastionLocationWhereUniqueInput>;
@@ -1068,7 +1070,6 @@ export type QueryBastionLocationsArgs = {
   where?: InputMaybe<BastionLocationWhereInput>;
 };
 
-
 export type QueryExchangeRatesArgs = {
   cursor?: InputMaybe<ExchangeRateWhereUniqueInput>;
   distinct?: InputMaybe<Array<ExchangeRateScalarFieldEnum>>;
@@ -1078,28 +1079,23 @@ export type QueryExchangeRatesArgs = {
   where?: InputMaybe<ExchangeRateWhereInput>;
 };
 
-
 export type QueryGetBastionHistoryArgs = {
   filter?: InputMaybe<BastionHistoryWhereInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
 
-
 export type QueryGetBuildingsByRealmIdArgs = {
   id: Scalars['Float'];
 };
-
 
 export type QueryGetDesiegeArgs = {
   id: Scalars['Float'];
 };
 
-
 export type QueryGetFoodByRealmIdArgs = {
   id: Scalars['Float'];
 };
-
 
 export type QueryGetLoreEntitiesArgs = {
   filter?: InputMaybe<LoreEntityWhereInput>;
@@ -1107,35 +1103,29 @@ export type QueryGetLoreEntitiesArgs = {
   take?: InputMaybe<Scalars['Float']>;
 };
 
-
 export type QueryGetLoreEntityArgs = {
   entityId: Scalars['Float'];
 };
-
 
 export type QueryGetLorePoisArgs = {
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
 
-
 export type QueryGetRealmArgs = {
   realmId: Scalars['Float'];
 };
-
 
 export type QueryGetRealmCombatResultArgs = {
   defendRealmId: Scalars['Float'];
   transactionHash: Scalars['String'];
 };
 
-
 export type QueryGetRealmHistoryArgs = {
   filter?: InputMaybe<RealmHistoryWhereInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
-
 
 export type QueryGetRealmsArgs = {
   filter?: InputMaybe<RealmWhereInput>;
@@ -1144,16 +1134,13 @@ export type QueryGetRealmsArgs = {
   take?: InputMaybe<Scalars['Float']>;
 };
 
-
 export type QueryGetResourceArgs = {
   id: Scalars['Float'];
 };
 
-
 export type QueryGetResourcesByAddressArgs = {
   address: Scalars['String'];
 };
-
 
 export type QueryGroupByRealmHistoryArgs = {
   by: Array<RealmHistoryScalarFieldEnum>;
@@ -1164,24 +1151,20 @@ export type QueryGroupByRealmHistoryArgs = {
   where?: InputMaybe<RealmHistoryWhereInput>;
 };
 
-
 export type QueryRealmArgs = {
   id: Scalars['Float'];
 };
-
 
 export type QueryRealmCombatHistoryArgs = {
   defendRealmId: Scalars['Float'];
   transactionHash: Scalars['String'];
 };
 
-
 export type QueryRealmHistoryArgs = {
   filter?: InputMaybe<RealmHistoryWhereInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
-
 
 export type QueryRealmsArgs = {
   filter?: InputMaybe<RealmWhereInput>;
@@ -1190,16 +1173,13 @@ export type QueryRealmsArgs = {
   take?: InputMaybe<Scalars['Float']>;
 };
 
-
 export type QueryRealmsCountArgs = {
   filter?: InputMaybe<RealmWhereInput>;
 };
 
-
 export type QueryTokenBalancesArgs = {
   address: Scalars['String'];
 };
-
 
 export type QueryTravelsArgs = {
   cursor?: InputMaybe<TravelWhereUniqueInput>;
@@ -1209,7 +1189,6 @@ export type QueryTravelsArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TravelWhereInput>;
 };
-
 
 export type QueryWalletBalancesArgs = {
   cursor?: InputMaybe<WalletBalanceWhereUniqueInput>;
@@ -1222,7 +1201,7 @@ export type QueryWalletBalancesArgs = {
 
 export enum QueryMode {
   Default = 'default',
-  Insensitive = 'insensitive'
+  Insensitive = 'insensitive',
 }
 
 /** The Realm Model */
@@ -1434,7 +1413,7 @@ export enum RealmHistoryScalarFieldEnum {
   RealmOrder = 'realmOrder',
   RealmOwner = 'realmOwner',
   Timestamp = 'timestamp',
-  TransactionHash = 'transactionHash'
+  TransactionHash = 'transactionHash',
 }
 
 export type RealmHistoryScalarWhereWithAggregatesInput = {
@@ -1562,7 +1541,7 @@ export enum RealmTraitType {
   City = 'City',
   Harbor = 'Harbor',
   Region = 'Region',
-  River = 'River'
+  River = 'River',
 }
 
 export type RealmTraitWhereInput = {
@@ -1734,7 +1713,7 @@ export type ResourceWhereInput = {
 
 export enum SortOrder {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export type StringFilter = {
@@ -1847,7 +1826,7 @@ export enum TravelScalarFieldEnum {
   LocationTokenId = 'locationTokenId',
   NestedId = 'nestedId',
   Timestamp = 'timestamp',
-  TokenId = 'tokenId'
+  TokenId = 'tokenId',
 }
 
 export type TravelWhereInput = {
@@ -1983,7 +1962,7 @@ export enum WalletBalanceScalarFieldEnum {
   Amount = 'amount',
   Id = 'id',
   LastEventId = 'lastEventId',
-  TokenId = 'tokenId'
+  TokenId = 'tokenId',
 }
 
 export type WalletBalanceWhereInput = {
@@ -2030,8 +2009,54 @@ export type GetBastionQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-
-export type GetBastionQuery = { __typename?: 'Query', bastion: { __typename?: 'Bastion', bastionId: number, latitude: number, longitude: number, locations: Array<{ __typename?: 'BastionLocation', locationId: number, bastionId: number, defendingOrderId: number, takenBlock: number, armies: Array<{ __typename?: 'Army', armyId: number, realmId: number, xp: number, destinationRealmId: number, destinationArrivalTime?: any | null, armyPacked: number, lastAttacked?: any | null, level: number, callSign: number, lightCavalryQty: number, lightCavalryHealth: number, heavyCavalryQty: number, heavyCavalryHealth: number, archerQty: number, archerHealth: number, longbowQty: number, longbowHealth: number, mageQty: number, mageHealth: number, arcanistQty: number, arcanistHealth: number, lightInfantryQty: number, lightInfantryHealth: number, heavyInfantryQty: number, heavyInfantryHealth: number, orderId: number, bastionArrivalBlock: number, bastionCurrentLocation: number, bastionId?: string | null }> }> } };
+export type GetBastionQuery = {
+  __typename?: 'Query';
+  bastion: {
+    __typename?: 'Bastion';
+    bastionId: number;
+    latitude: number;
+    longitude: number;
+    locations: Array<{
+      __typename?: 'BastionLocation';
+      locationId: number;
+      bastionId: number;
+      defendingOrderId: number;
+      takenBlock: number;
+      armies: Array<{
+        __typename?: 'Army';
+        armyId: number;
+        realmId: number;
+        xp: number;
+        destinationRealmId: number;
+        destinationArrivalTime?: any | null;
+        armyPacked: number;
+        lastAttacked?: any | null;
+        level: number;
+        callSign: number;
+        lightCavalryQty: number;
+        lightCavalryHealth: number;
+        heavyCavalryQty: number;
+        heavyCavalryHealth: number;
+        archerQty: number;
+        archerHealth: number;
+        longbowQty: number;
+        longbowHealth: number;
+        mageQty: number;
+        mageHealth: number;
+        arcanistQty: number;
+        arcanistHealth: number;
+        lightInfantryQty: number;
+        lightInfantryHealth: number;
+        heavyInfantryQty: number;
+        heavyInfantryHealth: number;
+        orderId: number;
+        bastionArrivalBlock: number;
+        bastionCurrentLocation: number;
+        bastionId?: string | null;
+      }>;
+    }>;
+  };
+};
 
 export type GetBastionHistoryQueryVariables = Exact<{
   filter?: InputMaybe<BastionHistoryWhereInput>;
@@ -2039,30 +2064,90 @@ export type GetBastionHistoryQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
+export type GetBastionHistoryQuery = {
+  __typename?: 'Query';
+  getBastionHistory: Array<{
+    __typename?: 'BastionHistory';
+    bastionId: number;
+    realmHistoryEventId: string;
+    realmHistoryEventType: string;
+    realmHistory: {
+      __typename?: 'RealmHistory';
+      id: number;
+      eventId?: string | null;
+      eventType?: string | null;
+      realmId: number;
+      realmOwner?: string | null;
+      data?: any | null;
+      timestamp?: any | null;
+      transactionHash?: string | null;
+    };
+  }>;
+};
 
-export type GetBastionHistoryQuery = { __typename?: 'Query', getBastionHistory: Array<{ __typename?: 'BastionHistory', bastionId: number, realmHistoryEventId: string, realmHistoryEventType: string, realmHistory: { __typename?: 'RealmHistory', id: number, eventId?: string | null, eventType?: string | null, realmId: number, realmOwner?: string | null, data?: any | null, timestamp?: any | null, transactionHash?: string | null } }> };
-
-export type DesiegeFragmentFragment = { __typename?: 'Desiege', id: string, gameId: number, winner: number, attackedTokens: number, defendedTokens: number, eventIndexed: number, initialHealth: number, startedOn: any };
+export type DesiegeFragmentFragment = {
+  __typename?: 'Desiege';
+  id: string;
+  gameId: number;
+  winner: number;
+  attackedTokens: number;
+  defendedTokens: number;
+  eventIndexed: number;
+  initialHealth: number;
+  startedOn: any;
+};
 
 export type GetDesiegeQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
+export type GetDesiegeQuery = {
+  __typename?: 'Query';
+  getDesiege: {
+    __typename?: 'Desiege';
+    id: string;
+    gameId: number;
+    winner: number;
+    attackedTokens: number;
+    defendedTokens: number;
+    eventIndexed: number;
+    initialHealth: number;
+    startedOn: any;
+  };
+};
 
-export type GetDesiegeQuery = { __typename?: 'Query', getDesiege: { __typename?: 'Desiege', id: string, gameId: number, winner: number, attackedTokens: number, defendedTokens: number, eventIndexed: number, initialHealth: number, startedOn: any } };
+export type GetExchangeRatesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetExchangeRatesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetExchangeRatesQuery = { __typename?: 'Query', getExchangeRates: Array<{ __typename?: 'ExchangeRate24Hr', tokenId: number, tokenName: string, amount: string, buyAmount: string, sellAmount: string, currencyReserve: string, tokenReserve: string, percentChange24Hr?: number | null }> };
+export type GetExchangeRatesQuery = {
+  __typename?: 'Query';
+  getExchangeRates: Array<{
+    __typename?: 'ExchangeRate24Hr';
+    tokenId: number;
+    tokenName: string;
+    amount: string;
+    buyAmount: string;
+    sellAmount: string;
+    currencyReserve: string;
+    tokenReserve: string;
+    percentChange24Hr?: number | null;
+  }>;
+};
 
 export type GetHistoricPriceDataQueryVariables = Exact<{
   dateFrom: Scalars['String'];
   dateTo: Scalars['String'];
 }>;
 
-
-export type GetHistoricPriceDataQuery = { __typename?: 'Query', exchangeRates: Array<{ __typename?: 'ExchangeRate', date: string, hour: number, tokenId: number, amount: string }> };
+export type GetHistoricPriceDataQuery = {
+  __typename?: 'Query';
+  exchangeRates: Array<{
+    __typename?: 'ExchangeRate';
+    date: string;
+    hour: number;
+    tokenId: number;
+    amount: string;
+  }>;
+};
 
 export type GetLoreEntitiesQueryVariables = Exact<{
   filter?: InputMaybe<LoreEntityWhereInput>;
@@ -2070,61 +2155,311 @@ export type GetLoreEntitiesQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
-
-export type GetLoreEntitiesQuery = { __typename?: 'Query', getLoreEntities: Array<{ __typename?: 'LoreEntity', id: string, owner: string, ownerDisplayName?: string | null, kind: number, revisions: Array<{ __typename?: 'LoreEntityRevision', revisionNumber: number, title?: string | null, excerpt?: string | null, createdAt: any }> }> };
+export type GetLoreEntitiesQuery = {
+  __typename?: 'Query';
+  getLoreEntities: Array<{
+    __typename?: 'LoreEntity';
+    id: string;
+    owner: string;
+    ownerDisplayName?: string | null;
+    kind: number;
+    revisions: Array<{
+      __typename?: 'LoreEntityRevision';
+      revisionNumber: number;
+      title?: string | null;
+      excerpt?: string | null;
+      createdAt: any;
+    }>;
+  }>;
+};
 
 export type GetLoreEntityQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-
-export type GetLoreEntityQuery = { __typename?: 'Query', getLoreEntity: { __typename?: 'LoreEntity', id: string, owner: string, ownerDisplayName?: string | null, kind: number, revisions: Array<{ __typename?: 'LoreEntityRevision', markdown?: string | null, revisionNumber: number, title?: string | null, excerpt?: string | null, createdAt: any }> } };
+export type GetLoreEntityQuery = {
+  __typename?: 'Query';
+  getLoreEntity: {
+    __typename?: 'LoreEntity';
+    id: string;
+    owner: string;
+    ownerDisplayName?: string | null;
+    kind: number;
+    revisions: Array<{
+      __typename?: 'LoreEntityRevision';
+      markdown?: string | null;
+      revisionNumber: number;
+      title?: string | null;
+      excerpt?: string | null;
+      createdAt: any;
+    }>;
+  };
+};
 
 export type GetLorePoisQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Float']>;
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
+export type GetLorePoisQuery = {
+  __typename?: 'Query';
+  getLorePois: Array<{
+    __typename?: 'LorePoi';
+    id: string;
+    name: string;
+    assetType?: string | null;
+  }>;
+};
 
-export type GetLorePoisQuery = { __typename?: 'Query', getLorePois: Array<{ __typename?: 'LorePoi', id: string, name: string, assetType?: string | null }> };
+export type LoreEntityFragmentFragment = {
+  __typename?: 'LoreEntity';
+  id: string;
+  owner: string;
+  ownerDisplayName?: string | null;
+  kind: number;
+  revisions: Array<{
+    __typename?: 'LoreEntityRevision';
+    revisionNumber: number;
+    title?: string | null;
+    excerpt?: string | null;
+    createdAt: any;
+  }>;
+};
 
-export type LoreEntityFragmentFragment = { __typename?: 'LoreEntity', id: string, owner: string, ownerDisplayName?: string | null, kind: number, revisions: Array<{ __typename?: 'LoreEntityRevision', revisionNumber: number, title?: string | null, excerpt?: string | null, createdAt: any }> };
-
-export type LorePoiFragmentFragment = { __typename?: 'LorePoi', id: string, name: string, assetType?: string | null };
+export type LorePoiFragmentFragment = {
+  __typename?: 'LorePoi';
+  id: string;
+  name: string;
+  assetType?: string | null;
+};
 
 export type GetAccountQueryVariables = Exact<{
   account: Scalars['String'];
   realmIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
 }>;
 
+export type GetAccountQuery = {
+  __typename?: 'Query';
+  ownedRealmsCount: number;
+  settledRealmsCount: number;
+  accountHistory: Array<{
+    __typename?: 'RealmHistory';
+    id: number;
+    eventType?: string | null;
+    eventId?: string | null;
+    realmId: number;
+    realmOwner?: string | null;
+    realmName?: string | null;
+    realmOrder?: string | null;
+    data?: any | null;
+    timestamp?: any | null;
+  }>;
+};
 
-export type GetAccountQuery = { __typename?: 'Query', ownedRealmsCount: number, settledRealmsCount: number, accountHistory: Array<{ __typename?: 'RealmHistory', id: number, eventType?: string | null, eventId?: string | null, realmId: number, realmOwner?: string | null, realmName?: string | null, realmOrder?: string | null, data?: any | null, timestamp?: any | null }> };
+export type GetGameConstantsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetGameConstantsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetGameConstantsQuery = { __typename?: 'Query', battalionStats: Array<{ __typename?: 'BattalionStats', battalionId: number, battalionName: string, type: string, combatType: string, value: number, requiredBuildingId: number, requiredBuildingName: string }>, buildingCosts: Array<{ __typename?: 'BuildingCost', buildingId: number, buildingName: string, amount: number, resources: any }>, battalionCosts: Array<{ __typename?: 'BattalionCost', battalionId: number, battalionName: string, resources: any }>, laborAndToolCosts: Array<{ __typename?: 'ResourceLaborAndToolCost', resourceId: number, resourceName: string, tier: string, costs: any }> };
+export type GetGameConstantsQuery = {
+  __typename?: 'Query';
+  battalionStats: Array<{
+    __typename?: 'BattalionStats';
+    battalionId: number;
+    battalionName: string;
+    type: string;
+    combatType: string;
+    value: number;
+    requiredBuildingId: number;
+    requiredBuildingName: string;
+  }>;
+  buildingCosts: Array<{
+    __typename?: 'BuildingCost';
+    buildingId: number;
+    buildingName: string;
+    amount: number;
+    resources: any;
+  }>;
+  battalionCosts: Array<{
+    __typename?: 'BattalionCost';
+    battalionId: number;
+    battalionName: string;
+    resources: any;
+  }>;
+  laborAndToolCosts: Array<{
+    __typename?: 'ResourceLaborAndToolCost';
+    resourceId: number;
+    resourceName: string;
+    tier: string;
+    costs: any;
+  }>;
+};
 
 export type GetRealmQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-
-export type GetRealmQuery = { __typename?: 'Query', realm: { __typename?: 'Realm', realmId: number, owner?: string | null, bridgedOwner?: string | null, ownerL2?: string | null, settledOwner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, wonder?: string | null, lastAttacked?: any | null, lastClaimTime?: any | null, lastTick?: any | null, lastVaultTime?: any | null, longitude: number, latitude: number, resources?: Array<{ __typename?: 'Resource', resourceId: number, resourceName: string, level: number, upgrades: Array<string>, labor?: { __typename?: 'Labor', qtyBuilt: number, lastUpdate?: any | null, balance?: any | null, vaultBalance?: any | null } | null }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, relic?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, relicsOwned?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, buildings?: Array<{ __typename?: 'Building', buildingId: number, buildingName: string, buildingIntegrity: number, count: number, population: number, culture: number, food: number, limitTraitId: number, limitTraitName: string }> | null, troops?: Array<{ __typename?: 'Troop', realmId: number, troopId: number, troopName: string, index: number, type: number, tier: number, agility: number, attack: number, armor: number, vitality: number, wisdom: number, squadSlot: number }> | null, ownArmies: Array<{ __typename?: 'Army', armyId: number, realmId: number, bastionId?: string | null, xp: number, destinationRealmId: number, destinationArrivalTime?: any | null, armyPacked: number, lastAttacked?: any | null, level: number, callSign: number, lightCavalryQty: number, lightCavalryHealth: number, heavyCavalryQty: number, heavyCavalryHealth: number, archerQty: number, archerHealth: number, longbowQty: number, longbowHealth: number, mageQty: number, mageHealth: number, arcanistQty: number, arcanistHealth: number, lightInfantryQty: number, lightInfantryHealth: number, heavyInfantryQty: number, heavyInfantryHealth: number }>, foods: Array<{ __typename?: 'Food', realmId: number, buildingId: number, buildingName: string, qty?: number | null, harvests?: number | null, createdAt: any }> } };
+export type GetRealmQuery = {
+  __typename?: 'Query';
+  realm: {
+    __typename?: 'Realm';
+    realmId: number;
+    owner?: string | null;
+    bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
+    name?: string | null;
+    rarityRank: number;
+    rarityScore: number;
+    orderType: string;
+    wonder?: string | null;
+    lastAttacked?: any | null;
+    lastClaimTime?: any | null;
+    lastTick?: any | null;
+    lastVaultTime?: any | null;
+    longitude: number;
+    latitude: number;
+    resources?: Array<{
+      __typename?: 'Resource';
+      resourceId: number;
+      resourceName: string;
+      level: number;
+      upgrades: Array<string>;
+      labor?: {
+        __typename?: 'Labor';
+        qtyBuilt: number;
+        lastUpdate?: any | null;
+        balance?: any | null;
+        vaultBalance?: any | null;
+      } | null;
+    }> | null;
+    traits?: Array<{
+      __typename?: 'RealmTrait';
+      type: string;
+      qty: number;
+    }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      buildingId: number;
+      buildingName: string;
+      buildingIntegrity: number;
+      count: number;
+      population: number;
+      culture: number;
+      food: number;
+      limitTraitId: number;
+      limitTraitName: string;
+    }> | null;
+    troops?: Array<{
+      __typename?: 'Troop';
+      realmId: number;
+      troopId: number;
+      troopName: string;
+      index: number;
+      type: number;
+      tier: number;
+      agility: number;
+      attack: number;
+      armor: number;
+      vitality: number;
+      wisdom: number;
+      squadSlot: number;
+    }> | null;
+    ownArmies: Array<{
+      __typename?: 'Army';
+      armyId: number;
+      realmId: number;
+      bastionId?: string | null;
+      orderId: number;
+      xp: number;
+      destinationRealmId: number;
+      destinationArrivalTime?: any | null;
+      armyPacked: number;
+      lastAttacked?: any | null;
+      level: number;
+      callSign: number;
+      lightCavalryQty: number;
+      lightCavalryHealth: number;
+      heavyCavalryQty: number;
+      heavyCavalryHealth: number;
+      archerQty: number;
+      archerHealth: number;
+      longbowQty: number;
+      longbowHealth: number;
+      mageQty: number;
+      mageHealth: number;
+      arcanistQty: number;
+      arcanistHealth: number;
+      lightInfantryQty: number;
+      lightInfantryHealth: number;
+      heavyInfantryQty: number;
+      heavyInfantryHealth: number;
+      bastionArrivalBlock: number;
+      bastionCurrentLocation: number;
+      bastionPastLocation: number;
+    }>;
+    foods: Array<{
+      __typename?: 'Food';
+      realmId: number;
+      buildingId: number;
+      buildingName: string;
+      qty?: number | null;
+      harvests?: number | null;
+      createdAt: any;
+    }>;
+  };
+};
 
 export type GetBuildingsByRealmIdQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-
-export type GetBuildingsByRealmIdQuery = { __typename?: 'Query', getBuildingsByRealmId: Array<{ __typename?: 'Building', realmId: number, buildingId: number, buildingName: string, buildingIntegrity: number, limit?: number | null, limitTraitId: number, limitTraitName: string, count: number, population: number, food: number, culture: number, buildingCost: { __typename?: 'BuildingCost', amount: number, resources: any } }> };
+export type GetBuildingsByRealmIdQuery = {
+  __typename?: 'Query';
+  getBuildingsByRealmId: Array<{
+    __typename?: 'Building';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    buildingIntegrity: number;
+    limit?: number | null;
+    limitTraitId: number;
+    limitTraitName: string;
+    count: number;
+    population: number;
+    food: number;
+    culture: number;
+    buildingCost: {
+      __typename?: 'BuildingCost';
+      amount: number;
+      resources: any;
+    };
+  }>;
+};
 
 export type GetFoodByRealmIdQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-
-export type GetFoodByRealmIdQuery = { __typename?: 'Query', getFoodByRealmId: Array<{ __typename?: 'Food', realmId: number, buildingId: number, buildingName: string, qty?: number | null, harvests?: number | null, createdAt: any }> };
+export type GetFoodByRealmIdQuery = {
+  __typename?: 'Query';
+  getFoodByRealmId: Array<{
+    __typename?: 'Food';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    qty?: number | null;
+    harvests?: number | null;
+    createdAt: any;
+  }>;
+};
 
 export type GetRealmHistoryQueryVariables = Exact<{
   filter?: InputMaybe<RealmHistoryWhereInput>;
@@ -2132,28 +2467,77 @@ export type GetRealmHistoryQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
-
-export type GetRealmHistoryQuery = { __typename?: 'Query', getRealmHistory: Array<{ __typename?: 'RealmHistory', id: number, eventId?: string | null, eventType?: string | null, realmId: number, realmOwner?: string | null, data?: any | null, timestamp?: any | null, transactionHash?: string | null }> };
+export type GetRealmHistoryQuery = {
+  __typename?: 'Query';
+  getRealmHistory: Array<{
+    __typename?: 'RealmHistory';
+    id: number;
+    eventId?: string | null;
+    eventType?: string | null;
+    realmId: number;
+    realmOwner?: string | null;
+    data?: any | null;
+    timestamp?: any | null;
+    transactionHash?: string | null;
+  }>;
+};
 
 export type GroupByRealmHistoryQueryVariables = Exact<{
   by: Array<RealmHistoryScalarFieldEnum> | RealmHistoryScalarFieldEnum;
-  orderBy?: InputMaybe<Array<RealmHistoryOrderByWithAggregationInput> | RealmHistoryOrderByWithAggregationInput>;
+  orderBy?: InputMaybe<
+    | Array<RealmHistoryOrderByWithAggregationInput>
+    | RealmHistoryOrderByWithAggregationInput
+  >;
   where?: InputMaybe<RealmHistoryWhereInput>;
   take?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   isOwner: Scalars['Boolean'];
 }>;
 
-
-export type GroupByRealmHistoryQuery = { __typename?: 'Query', groupByRealmHistory: Array<{ __typename?: 'RealmHistoryGroupBy', realmId: number, realmOwner?: string, realmName?: string, _count?: { __typename?: 'RealmHistoryCountAggregate', _all: number } | null }> };
+export type GroupByRealmHistoryQuery = {
+  __typename?: 'Query';
+  groupByRealmHistory: Array<{
+    __typename?: 'RealmHistoryGroupBy';
+    realmId: number;
+    realmOwner?: string;
+    realmName?: string;
+    _count?: { __typename?: 'RealmHistoryCountAggregate'; _all: number } | null;
+  }>;
+};
 
 export type GetRealmCombatResultQueryVariables = Exact<{
   defendRealmId: Scalars['Float'];
   transactionHash: Scalars['String'];
 }>;
 
-
-export type GetRealmCombatResultQuery = { __typename?: 'Query', getRealmCombatResult: { __typename?: 'CombatResult', defendRealmId: number, attackRealmId: number, transactionHash: string, relicLost?: number | null, outcome?: number | null, timestamp?: any | null, history?: Array<{ __typename?: 'CombatHistory', eventType: string, attackSquad?: any | null, defendSquad?: any | null, outcome?: number | null, attackType?: number | null, hitPoints?: number | null, timestamp?: any | null }> | null, resourcesPillaged?: Array<{ __typename?: 'ResourceAmount', resourceId: number, resourceName: string, amount: string }> | null } };
+export type GetRealmCombatResultQuery = {
+  __typename?: 'Query';
+  getRealmCombatResult: {
+    __typename?: 'CombatResult';
+    defendRealmId: number;
+    attackRealmId: number;
+    transactionHash: string;
+    relicLost?: number | null;
+    outcome?: number | null;
+    timestamp?: any | null;
+    history?: Array<{
+      __typename?: 'CombatHistory';
+      eventType: string;
+      attackSquad?: any | null;
+      defendSquad?: any | null;
+      outcome?: number | null;
+      attackType?: number | null;
+      hitPoints?: number | null;
+      timestamp?: any | null;
+    }> | null;
+    resourcesPillaged?: Array<{
+      __typename?: 'ResourceAmount';
+      resourceId: number;
+      resourceName: string;
+      amount: string;
+    }> | null;
+  };
+};
 
 export type GetRealmsQueryVariables = Exact<{
   filter?: InputMaybe<RealmWhereInput>;
@@ -2162,8 +2546,127 @@ export type GetRealmsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
-
-export type GetRealmsQuery = { __typename?: 'Query', total: number, realms: Array<{ __typename?: 'Realm', realmId: number, owner?: string | null, bridgedOwner?: string | null, ownerL2?: string | null, settledOwner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, wonder?: string | null, lastAttacked?: any | null, lastClaimTime?: any | null, lastTick?: any | null, lastVaultTime?: any | null, longitude: number, latitude: number, resources?: Array<{ __typename?: 'Resource', resourceId: number, resourceName: string, level: number, upgrades: Array<string>, labor?: { __typename?: 'Labor', qtyBuilt: number, lastUpdate?: any | null, balance?: any | null, vaultBalance?: any | null } | null }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, relic?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, relicsOwned?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, buildings?: Array<{ __typename?: 'Building', buildingId: number, buildingName: string, buildingIntegrity: number, count: number, population: number, culture: number, food: number, limitTraitId: number, limitTraitName: string }> | null, troops?: Array<{ __typename?: 'Troop', realmId: number, troopId: number, troopName: string, index: number, type: number, tier: number, agility: number, attack: number, armor: number, vitality: number, wisdom: number, squadSlot: number }> | null, ownArmies: Array<{ __typename?: 'Army', armyId: number, realmId: number, bastionId?: string | null, xp: number, destinationRealmId: number, destinationArrivalTime?: any | null, armyPacked: number, lastAttacked?: any | null, level: number, callSign: number, lightCavalryQty: number, lightCavalryHealth: number, heavyCavalryQty: number, heavyCavalryHealth: number, archerQty: number, archerHealth: number, longbowQty: number, longbowHealth: number, mageQty: number, mageHealth: number, arcanistQty: number, arcanistHealth: number, lightInfantryQty: number, lightInfantryHealth: number, heavyInfantryQty: number, heavyInfantryHealth: number }>, foods: Array<{ __typename?: 'Food', realmId: number, buildingId: number, buildingName: string, qty?: number | null, harvests?: number | null, createdAt: any }> }> };
+export type GetRealmsQuery = {
+  __typename?: 'Query';
+  total: number;
+  realms: Array<{
+    __typename?: 'Realm';
+    realmId: number;
+    owner?: string | null;
+    bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
+    name?: string | null;
+    rarityRank: number;
+    rarityScore: number;
+    orderType: string;
+    wonder?: string | null;
+    lastAttacked?: any | null;
+    lastClaimTime?: any | null;
+    lastTick?: any | null;
+    lastVaultTime?: any | null;
+    longitude: number;
+    latitude: number;
+    resources?: Array<{
+      __typename?: 'Resource';
+      resourceId: number;
+      resourceName: string;
+      level: number;
+      upgrades: Array<string>;
+      labor?: {
+        __typename?: 'Labor';
+        qtyBuilt: number;
+        lastUpdate?: any | null;
+        balance?: any | null;
+        vaultBalance?: any | null;
+      } | null;
+    }> | null;
+    traits?: Array<{
+      __typename?: 'RealmTrait';
+      type: string;
+      qty: number;
+    }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      buildingId: number;
+      buildingName: string;
+      buildingIntegrity: number;
+      count: number;
+      population: number;
+      culture: number;
+      food: number;
+      limitTraitId: number;
+      limitTraitName: string;
+    }> | null;
+    troops?: Array<{
+      __typename?: 'Troop';
+      realmId: number;
+      troopId: number;
+      troopName: string;
+      index: number;
+      type: number;
+      tier: number;
+      agility: number;
+      attack: number;
+      armor: number;
+      vitality: number;
+      wisdom: number;
+      squadSlot: number;
+    }> | null;
+    ownArmies: Array<{
+      __typename?: 'Army';
+      armyId: number;
+      realmId: number;
+      bastionId?: string | null;
+      orderId: number;
+      xp: number;
+      destinationRealmId: number;
+      destinationArrivalTime?: any | null;
+      armyPacked: number;
+      lastAttacked?: any | null;
+      level: number;
+      callSign: number;
+      lightCavalryQty: number;
+      lightCavalryHealth: number;
+      heavyCavalryQty: number;
+      heavyCavalryHealth: number;
+      archerQty: number;
+      archerHealth: number;
+      longbowQty: number;
+      longbowHealth: number;
+      mageQty: number;
+      mageHealth: number;
+      arcanistQty: number;
+      arcanistHealth: number;
+      lightInfantryQty: number;
+      lightInfantryHealth: number;
+      heavyInfantryQty: number;
+      heavyInfantryHealth: number;
+      bastionArrivalBlock: number;
+      bastionCurrentLocation: number;
+      bastionPastLocation: number;
+    }>;
+    foods: Array<{
+      __typename?: 'Food';
+      realmId: number;
+      buildingId: number;
+      buildingName: string;
+      qty?: number | null;
+      harvests?: number | null;
+      createdAt: any;
+    }>;
+  }>;
+};
 
 export type GetRealmsWithTravelsQueryVariables = Exact<{
   filter?: InputMaybe<RealmWhereInput>;
@@ -2173,273 +2676,672 @@ export type GetRealmsWithTravelsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
+export type GetRealmsWithTravelsQuery = {
+  __typename?: 'Query';
+  total: number;
+  realms: Array<{
+    __typename?: 'Realm';
+    realmId: number;
+    owner?: string | null;
+    bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
+    name?: string | null;
+    rarityRank: number;
+    rarityScore: number;
+    orderType: string;
+    wonder?: string | null;
+    lastAttacked?: any | null;
+    lastClaimTime?: any | null;
+    lastTick?: any | null;
+    lastVaultTime?: any | null;
+    longitude: number;
+    latitude: number;
+    resources?: Array<{
+      __typename?: 'Resource';
+      resourceId: number;
+      resourceName: string;
+      level: number;
+      upgrades: Array<string>;
+      labor?: {
+        __typename?: 'Labor';
+        qtyBuilt: number;
+        lastUpdate?: any | null;
+        balance?: any | null;
+        vaultBalance?: any | null;
+      } | null;
+    }> | null;
+    traits?: Array<{
+      __typename?: 'RealmTrait';
+      type: string;
+      qty: number;
+    }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      buildingId: number;
+      buildingName: string;
+      buildingIntegrity: number;
+      count: number;
+      population: number;
+      culture: number;
+      food: number;
+      limitTraitId: number;
+      limitTraitName: string;
+    }> | null;
+    troops?: Array<{
+      __typename?: 'Troop';
+      realmId: number;
+      troopId: number;
+      troopName: string;
+      index: number;
+      type: number;
+      tier: number;
+      agility: number;
+      attack: number;
+      armor: number;
+      vitality: number;
+      wisdom: number;
+      squadSlot: number;
+    }> | null;
+    ownArmies: Array<{
+      __typename?: 'Army';
+      armyId: number;
+      realmId: number;
+      bastionId?: string | null;
+      orderId: number;
+      xp: number;
+      destinationRealmId: number;
+      destinationArrivalTime?: any | null;
+      armyPacked: number;
+      lastAttacked?: any | null;
+      level: number;
+      callSign: number;
+      lightCavalryQty: number;
+      lightCavalryHealth: number;
+      heavyCavalryQty: number;
+      heavyCavalryHealth: number;
+      archerQty: number;
+      archerHealth: number;
+      longbowQty: number;
+      longbowHealth: number;
+      mageQty: number;
+      mageHealth: number;
+      arcanistQty: number;
+      arcanistHealth: number;
+      lightInfantryQty: number;
+      lightInfantryHealth: number;
+      heavyInfantryQty: number;
+      heavyInfantryHealth: number;
+      bastionArrivalBlock: number;
+      bastionCurrentLocation: number;
+      bastionPastLocation: number;
+    }>;
+    foods: Array<{
+      __typename?: 'Food';
+      realmId: number;
+      buildingId: number;
+      buildingName: string;
+      qty?: number | null;
+      harvests?: number | null;
+      createdAt: any;
+    }>;
+  }>;
+  travels: Array<{
+    __typename?: 'Travel';
+    contractId: number;
+    tokenId: number;
+    nestedId: number;
+    destinationContractId: number;
+    destinationTokenId: number;
+    destinationNestedId: number;
+    destinationArrivalTime: any;
+  }>;
+};
 
-export type GetRealmsWithTravelsQuery = { __typename?: 'Query', total: number, realms: Array<{ __typename?: 'Realm', realmId: number, owner?: string | null, bridgedOwner?: string | null, ownerL2?: string | null, settledOwner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, wonder?: string | null, lastAttacked?: any | null, lastClaimTime?: any | null, lastTick?: any | null, lastVaultTime?: any | null, longitude: number, latitude: number, resources?: Array<{ __typename?: 'Resource', resourceId: number, resourceName: string, level: number, upgrades: Array<string>, labor?: { __typename?: 'Labor', qtyBuilt: number, lastUpdate?: any | null, balance?: any | null, vaultBalance?: any | null } | null }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, relic?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, relicsOwned?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, buildings?: Array<{ __typename?: 'Building', buildingId: number, buildingName: string, buildingIntegrity: number, count: number, population: number, culture: number, food: number, limitTraitId: number, limitTraitName: string }> | null, troops?: Array<{ __typename?: 'Troop', realmId: number, troopId: number, troopName: string, index: number, type: number, tier: number, agility: number, attack: number, armor: number, vitality: number, wisdom: number, squadSlot: number }> | null, ownArmies: Array<{ __typename?: 'Army', armyId: number, realmId: number, bastionId?: string | null, xp: number, destinationRealmId: number, destinationArrivalTime?: any | null, armyPacked: number, lastAttacked?: any | null, level: number, callSign: number, lightCavalryQty: number, lightCavalryHealth: number, heavyCavalryQty: number, heavyCavalryHealth: number, archerQty: number, archerHealth: number, longbowQty: number, longbowHealth: number, mageQty: number, mageHealth: number, arcanistQty: number, arcanistHealth: number, lightInfantryQty: number, lightInfantryHealth: number, heavyInfantryQty: number, heavyInfantryHealth: number }>, foods: Array<{ __typename?: 'Food', realmId: number, buildingId: number, buildingName: string, qty?: number | null, harvests?: number | null, createdAt: any }> }>, travels: Array<{ __typename?: 'Travel', contractId: number, tokenId: number, nestedId: number, destinationContractId: number, destinationTokenId: number, destinationNestedId: number, destinationArrivalTime: any }> };
+export type GetTroopStatsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetTroopStatsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTroopStatsQuery = {
+  __typename?: 'Query';
+  getTroopStats: Array<{
+    __typename?: 'TroopStats';
+    troopId: number;
+    troopName: string;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    troopCost?: {
+      __typename?: 'TroopCost';
+      amount: number;
+      resources: any;
+    } | null;
+  }>;
+};
 
+export type RealmFragmentFragment = {
+  __typename?: 'Realm';
+  realmId: number;
+  owner?: string | null;
+  bridgedOwner?: string | null;
+  ownerL2?: string | null;
+  settledOwner?: string | null;
+  name?: string | null;
+  rarityRank: number;
+  rarityScore: number;
+  orderType: string;
+  wonder?: string | null;
+  lastAttacked?: any | null;
+  lastClaimTime?: any | null;
+  lastTick?: any | null;
+  lastVaultTime?: any | null;
+  longitude: number;
+  latitude: number;
+  resources?: Array<{
+    __typename?: 'Resource';
+    resourceId: number;
+    resourceName: string;
+    level: number;
+    upgrades: Array<string>;
+    labor?: {
+      __typename?: 'Labor';
+      qtyBuilt: number;
+      lastUpdate?: any | null;
+      balance?: any | null;
+      vaultBalance?: any | null;
+    } | null;
+  }> | null;
+  traits?: Array<{
+    __typename?: 'RealmTrait';
+    type: string;
+    qty: number;
+  }> | null;
+  relic?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
+  relicsOwned?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
+  buildings?: Array<{
+    __typename?: 'Building';
+    buildingId: number;
+    buildingName: string;
+    buildingIntegrity: number;
+    count: number;
+    population: number;
+    culture: number;
+    food: number;
+    limitTraitId: number;
+    limitTraitName: string;
+  }> | null;
+  troops?: Array<{
+    __typename?: 'Troop';
+    realmId: number;
+    troopId: number;
+    troopName: string;
+    index: number;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    squadSlot: number;
+  }> | null;
+  ownArmies: Array<{
+    __typename?: 'Army';
+    armyId: number;
+    realmId: number;
+    bastionId?: string | null;
+    orderId: number;
+    xp: number;
+    destinationRealmId: number;
+    destinationArrivalTime?: any | null;
+    armyPacked: number;
+    lastAttacked?: any | null;
+    level: number;
+    callSign: number;
+    lightCavalryQty: number;
+    lightCavalryHealth: number;
+    heavyCavalryQty: number;
+    heavyCavalryHealth: number;
+    archerQty: number;
+    archerHealth: number;
+    longbowQty: number;
+    longbowHealth: number;
+    mageQty: number;
+    mageHealth: number;
+    arcanistQty: number;
+    arcanistHealth: number;
+    lightInfantryQty: number;
+    lightInfantryHealth: number;
+    heavyInfantryQty: number;
+    heavyInfantryHealth: number;
+    bastionArrivalBlock: number;
+    bastionCurrentLocation: number;
+    bastionPastLocation: number;
+  }>;
+  foods: Array<{
+    __typename?: 'Food';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    qty?: number | null;
+    harvests?: number | null;
+    createdAt: any;
+  }>;
+};
 
-export type GetTroopStatsQuery = { __typename?: 'Query', getTroopStats: Array<{ __typename?: 'TroopStats', troopId: number, troopName: string, type: number, tier: number, agility: number, attack: number, armor: number, vitality: number, wisdom: number, troopCost?: { __typename?: 'TroopCost', amount: number, resources: any } | null }> };
+export type RealmArmiesFragmentFragment = {
+  __typename?: 'Realm';
+  ownArmies: Array<{
+    __typename?: 'Army';
+    armyId: number;
+    realmId: number;
+    bastionId?: string | null;
+    orderId: number;
+    xp: number;
+    destinationRealmId: number;
+    destinationArrivalTime?: any | null;
+    armyPacked: number;
+    lastAttacked?: any | null;
+    level: number;
+    callSign: number;
+    lightCavalryQty: number;
+    lightCavalryHealth: number;
+    heavyCavalryQty: number;
+    heavyCavalryHealth: number;
+    archerQty: number;
+    archerHealth: number;
+    longbowQty: number;
+    longbowHealth: number;
+    mageQty: number;
+    mageHealth: number;
+    arcanistQty: number;
+    arcanistHealth: number;
+    lightInfantryQty: number;
+    lightInfantryHealth: number;
+    heavyInfantryQty: number;
+    heavyInfantryHealth: number;
+    bastionArrivalBlock: number;
+    bastionCurrentLocation: number;
+    bastionPastLocation: number;
+  }>;
+};
 
-export type RealmFragmentFragment = { __typename?: 'Realm', realmId: number, owner?: string | null, bridgedOwner?: string | null, ownerL2?: string | null, settledOwner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, wonder?: string | null, lastAttacked?: any | null, lastClaimTime?: any | null, lastTick?: any | null, lastVaultTime?: any | null, longitude: number, latitude: number, resources?: Array<{ __typename?: 'Resource', resourceId: number, resourceName: string, level: number, upgrades: Array<string>, labor?: { __typename?: 'Labor', qtyBuilt: number, lastUpdate?: any | null, balance?: any | null, vaultBalance?: any | null } | null }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, relic?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, relicsOwned?: Array<{ __typename?: 'Relic', realmId?: number | null, heldByRealm?: number | null }> | null, buildings?: Array<{ __typename?: 'Building', buildingId: number, buildingName: string, buildingIntegrity: number, count: number, population: number, culture: number, food: number, limitTraitId: number, limitTraitName: string }> | null, troops?: Array<{ __typename?: 'Troop', realmId: number, troopId: number, troopName: string, index: number, type: number, tier: number, agility: number, attack: number, armor: number, vitality: number, wisdom: number, squadSlot: number }> | null, ownArmies: Array<{ __typename?: 'Army', armyId: number, realmId: number, bastionId?: string | null, xp: number, destinationRealmId: number, destinationArrivalTime?: any | null, armyPacked: number, lastAttacked?: any | null, level: number, callSign: number, lightCavalryQty: number, lightCavalryHealth: number, heavyCavalryQty: number, heavyCavalryHealth: number, archerQty: number, archerHealth: number, longbowQty: number, longbowHealth: number, mageQty: number, mageHealth: number, arcanistQty: number, arcanistHealth: number, lightInfantryQty: number, lightInfantryHealth: number, heavyInfantryQty: number, heavyInfantryHealth: number }>, foods: Array<{ __typename?: 'Food', realmId: number, buildingId: number, buildingName: string, qty?: number | null, harvests?: number | null, createdAt: any }> };
+export type RealmBuildingsFragmentFragment = {
+  __typename?: 'Realm';
+  buildings?: Array<{
+    __typename?: 'Building';
+    buildingId: number;
+    buildingName: string;
+    buildingIntegrity: number;
+    count: number;
+    population: number;
+    culture: number;
+    food: number;
+    limitTraitId: number;
+    limitTraitName: string;
+  }> | null;
+};
 
-export type RealmArmiesFragmentFragment = { __typename?: 'Realm', ownArmies: Array<{ __typename?: 'Army', armyId: number, realmId: number, bastionId?: string | null, xp: number, destinationRealmId: number, destinationArrivalTime?: any | null, armyPacked: number, lastAttacked?: any | null, level: number, callSign: number, lightCavalryQty: number, lightCavalryHealth: number, heavyCavalryQty: number, heavyCavalryHealth: number, archerQty: number, archerHealth: number, longbowQty: number, longbowHealth: number, mageQty: number, mageHealth: number, arcanistQty: number, arcanistHealth: number, lightInfantryQty: number, lightInfantryHealth: number, heavyInfantryQty: number, heavyInfantryHealth: number }> };
+export type RealmFoodsFragmentFragment = {
+  __typename?: 'Realm';
+  foods: Array<{
+    __typename?: 'Food';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    qty?: number | null;
+    harvests?: number | null;
+    createdAt: any;
+  }>;
+};
 
-export type RealmBuildingsFragmentFragment = { __typename?: 'Realm', buildings?: Array<{ __typename?: 'Building', buildingId: number, buildingName: string, buildingIntegrity: number, count: number, population: number, culture: number, food: number, limitTraitId: number, limitTraitName: string }> | null };
+export type RealmTroopsFragmentFragment = {
+  __typename?: 'Realm';
+  troops?: Array<{
+    __typename?: 'Troop';
+    realmId: number;
+    troopId: number;
+    troopName: string;
+    index: number;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    squadSlot: number;
+  }> | null;
+};
 
-export type RealmFoodsFragmentFragment = { __typename?: 'Realm', foods: Array<{ __typename?: 'Food', realmId: number, buildingId: number, buildingName: string, qty?: number | null, harvests?: number | null, createdAt: any }> };
+export type TravelFragmentFragment = {
+  __typename?: 'Travel';
+  contractId: number;
+  tokenId: number;
+  nestedId: number;
+  destinationContractId: number;
+  destinationTokenId: number;
+  destinationNestedId: number;
+  destinationArrivalTime: any;
+};
 
-export type RealmTroopsFragmentFragment = { __typename?: 'Realm', troops?: Array<{ __typename?: 'Troop', realmId: number, troopId: number, troopName: string, index: number, type: number, tier: number, agility: number, attack: number, armor: number, vitality: number, wisdom: number, squadSlot: number }> | null };
-
-export type TravelFragmentFragment = { __typename?: 'Travel', contractId: number, tokenId: number, nestedId: number, destinationContractId: number, destinationTokenId: number, destinationNestedId: number, destinationArrivalTime: any };
-
-export type ResourceFragmentFragment = { __typename?: 'Resource', id: string, resourceId: number, resourceName: string, realmId?: number | null };
+export type ResourceFragmentFragment = {
+  __typename?: 'Resource';
+  id: string;
+  resourceId: number;
+  resourceName: string;
+  realmId?: number | null;
+};
 
 export type GetTravelsQueryVariables = Exact<{
   where?: InputMaybe<TravelWhereInput>;
-  orderBy?: InputMaybe<Array<TravelOrderByWithRelationInput> | TravelOrderByWithRelationInput>;
+  orderBy?: InputMaybe<
+    Array<TravelOrderByWithRelationInput> | TravelOrderByWithRelationInput
+  >;
   take?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
 }>;
 
-
-export type GetTravelsQuery = { __typename?: 'Query', payload: Array<{ __typename?: 'Travel', contractId: number, tokenId: number, nestedId: number, destinationContractId: number, destinationTokenId: number, destinationNestedId: number, destinationArrivalTime: any, startTime: any, endTime: any, originRealm?: { __typename?: 'Realm', realmId: number, longitude: number, latitude: number } | null, locationRealm?: { __typename?: 'Realm', realmId: number, longitude: number, latitude: number } | null, destinationRealm?: { __typename?: 'Realm', realmId: number, longitude: number, latitude: number } | null }> };
+export type GetTravelsQuery = {
+  __typename?: 'Query';
+  payload: Array<{
+    __typename?: 'Travel';
+    contractId: number;
+    tokenId: number;
+    nestedId: number;
+    destinationContractId: number;
+    destinationTokenId: number;
+    destinationNestedId: number;
+    destinationArrivalTime: any;
+    startTime: any;
+    endTime: any;
+    originRealm?: {
+      __typename?: 'Realm';
+      realmId: number;
+      longitude: number;
+      latitude: number;
+    } | null;
+    locationRealm?: {
+      __typename?: 'Realm';
+      realmId: number;
+      longitude: number;
+      latitude: number;
+    } | null;
+    destinationRealm?: {
+      __typename?: 'Realm';
+      realmId: number;
+      longitude: number;
+      latitude: number;
+    } | null;
+  }>;
+};
 
 export type GetTokenBalancesQueryVariables = Exact<{
   address: Scalars['String'];
 }>;
 
-
-export type GetTokenBalancesQuery = { __typename?: 'Query', tokenBalances: Array<{ __typename?: 'TokenBalance', tokenId: number, amount: string }> };
+export type GetTokenBalancesQuery = {
+  __typename?: 'Query';
+  tokenBalances: Array<{
+    __typename?: 'TokenBalance';
+    tokenId: number;
+    amount: string;
+  }>;
+};
 
 export const DesiegeFragmentFragmentDoc = gql`
-    fragment DesiegeFragment on Desiege {
-  id
-  gameId
-  winner
-  attackedTokens
-  defendedTokens
-  eventIndexed
-  initialHealth
-  startedOn
-}
-    `;
+  fragment DesiegeFragment on Desiege {
+    id
+    gameId
+    winner
+    attackedTokens
+    defendedTokens
+    eventIndexed
+    initialHealth
+    startedOn
+  }
+`;
 export const LoreEntityFragmentFragmentDoc = gql`
-    fragment LoreEntityFragment on LoreEntity {
-  id
-  owner
-  ownerDisplayName
-  kind
-  revisions {
-    revisionNumber
-    title
-    excerpt
-    createdAt
+  fragment LoreEntityFragment on LoreEntity {
+    id
+    owner
+    ownerDisplayName
+    kind
+    revisions {
+      revisionNumber
+      title
+      excerpt
+      createdAt
+    }
   }
-}
-    `;
+`;
 export const LorePoiFragmentFragmentDoc = gql`
-    fragment LorePoiFragment on LorePoi {
-  id
-  name
-  assetType
-}
-    `;
+  fragment LorePoiFragment on LorePoi {
+    id
+    name
+    assetType
+  }
+`;
 export const RealmBuildingsFragmentFragmentDoc = gql`
-    fragment RealmBuildingsFragment on Realm {
-  buildings {
-    buildingId
-    buildingName
-    buildingIntegrity
-    count
-    population
-    culture
-    food
-    limitTraitId
-    limitTraitName
+  fragment RealmBuildingsFragment on Realm {
+    buildings {
+      buildingId
+      buildingName
+      buildingIntegrity
+      count
+      population
+      culture
+      food
+      limitTraitId
+      limitTraitName
+    }
   }
-}
-    `;
+`;
 export const RealmTroopsFragmentFragmentDoc = gql`
-    fragment RealmTroopsFragment on Realm {
-  troops {
-    realmId
-    troopId
-    troopName
-    index
-    type
-    tier
-    agility
-    attack
-    armor
-    vitality
-    wisdom
-    squadSlot
+  fragment RealmTroopsFragment on Realm {
+    troops {
+      realmId
+      troopId
+      troopName
+      index
+      type
+      tier
+      agility
+      attack
+      armor
+      vitality
+      wisdom
+      squadSlot
+    }
   }
-}
-    `;
+`;
 export const RealmArmiesFragmentFragmentDoc = gql`
-    fragment RealmArmiesFragment on Realm {
-  ownArmies {
-    armyId
-    realmId
-    bastionId
-    xp
-    destinationRealmId
-    destinationArrivalTime
-    armyPacked
-    lastAttacked
-    xp
-    level
-    callSign
-    lightCavalryQty
-    lightCavalryHealth
-    heavyCavalryQty
-    heavyCavalryHealth
-    archerQty
-    archerHealth
-    longbowQty
-    longbowHealth
-    mageQty
-    mageHealth
-    arcanistQty
-    arcanistHealth
-    lightInfantryQty
-    lightInfantryHealth
-    heavyInfantryQty
-    heavyInfantryHealth
+  fragment RealmArmiesFragment on Realm {
+    ownArmies {
+      armyId
+      realmId
+      bastionId
+      orderId
+      xp
+      destinationRealmId
+      destinationArrivalTime
+      armyPacked
+      lastAttacked
+      xp
+      level
+      callSign
+      lightCavalryQty
+      lightCavalryHealth
+      heavyCavalryQty
+      heavyCavalryHealth
+      archerQty
+      archerHealth
+      longbowQty
+      longbowHealth
+      mageQty
+      mageHealth
+      arcanistQty
+      arcanistHealth
+      lightInfantryQty
+      lightInfantryHealth
+      heavyInfantryQty
+      heavyInfantryHealth
+      bastionArrivalBlock
+      bastionCurrentLocation
+      bastionPastLocation
+    }
   }
-}
-    `;
+`;
 export const RealmFoodsFragmentFragmentDoc = gql`
-    fragment RealmFoodsFragment on Realm {
-  foods {
-    realmId
-    buildingId
-    buildingName
-    qty
-    harvests
-    createdAt
+  fragment RealmFoodsFragment on Realm {
+    foods {
+      realmId
+      buildingId
+      buildingName
+      qty
+      harvests
+      createdAt
+    }
   }
-}
-    `;
+`;
 export const RealmFragmentFragmentDoc = gql`
-    fragment RealmFragment on Realm {
-  realmId
-  owner
-  bridgedOwner
-  ownerL2
-  settledOwner
-  name
-  rarityRank
-  rarityScore
-  orderType
-  wonder
-  lastAttacked
-  lastClaimTime
-  lastTick
-  lastVaultTime
-  longitude
-  latitude
-  resources {
+  fragment RealmFragment on Realm {
+    realmId
+    owner
+    bridgedOwner
+    ownerL2
+    settledOwner
+    name
+    rarityRank
+    rarityScore
+    orderType
+    wonder
+    lastAttacked
+    lastClaimTime
+    lastTick
+    lastVaultTime
+    longitude
+    latitude
+    resources {
+      resourceId
+      resourceName
+      labor {
+        qtyBuilt
+        lastUpdate
+        balance
+        vaultBalance
+      }
+      level
+      upgrades
+    }
+    traits {
+      type
+      qty
+    }
+    relic {
+      realmId
+      heldByRealm
+    }
+    relicsOwned {
+      realmId
+      heldByRealm
+    }
+    ...RealmBuildingsFragment
+    ...RealmTroopsFragment
+    ...RealmArmiesFragment
+    ...RealmFoodsFragment
+  }
+  ${RealmBuildingsFragmentFragmentDoc}
+  ${RealmTroopsFragmentFragmentDoc}
+  ${RealmArmiesFragmentFragmentDoc}
+  ${RealmFoodsFragmentFragmentDoc}
+`;
+export const TravelFragmentFragmentDoc = gql`
+  fragment TravelFragment on Travel {
+    contractId
+    tokenId
+    nestedId
+    destinationContractId
+    destinationTokenId
+    destinationNestedId
+    destinationArrivalTime
+  }
+`;
+export const ResourceFragmentFragmentDoc = gql`
+  fragment ResourceFragment on Resource {
+    id
     resourceId
     resourceName
-    labor {
-      qtyBuilt
-      lastUpdate
-      balance
-      vaultBalance
-    }
-    level
-    upgrades
-  }
-  traits {
-    type
-    qty
-  }
-  relic {
     realmId
-    heldByRealm
   }
-  relicsOwned {
-    realmId
-    heldByRealm
-  }
-  ...RealmBuildingsFragment
-  ...RealmTroopsFragment
-  ...RealmArmiesFragment
-  ...RealmFoodsFragment
-}
-    ${RealmBuildingsFragmentFragmentDoc}
-${RealmTroopsFragmentFragmentDoc}
-${RealmArmiesFragmentFragmentDoc}
-${RealmFoodsFragmentFragmentDoc}`;
-export const TravelFragmentFragmentDoc = gql`
-    fragment TravelFragment on Travel {
-  contractId
-  tokenId
-  nestedId
-  destinationContractId
-  destinationTokenId
-  destinationNestedId
-  destinationArrivalTime
-}
-    `;
-export const ResourceFragmentFragmentDoc = gql`
-    fragment ResourceFragment on Resource {
-  id
-  resourceId
-  resourceName
-  realmId
-}
-    `;
+`;
 export const GetBastionDocument = gql`
-    query getBastion($id: Float!) @api(name: starkIndexer) {
-  bastion(id: $id) {
-    bastionId
-    latitude
-    longitude
-    locations {
-      locationId
+  query getBastion($id: Float!) @api(name: starkIndexer) {
+    bastion(id: $id) {
       bastionId
-      defendingOrderId
-      takenBlock
-      armies {
-        armyId
-        realmId
-        xp
-        destinationRealmId
-        destinationArrivalTime
-        armyPacked
-        lastAttacked
-        xp
-        level
-        callSign
-        lightCavalryQty
-        lightCavalryHealth
-        heavyCavalryQty
-        heavyCavalryHealth
-        archerQty
-        archerHealth
-        longbowQty
-        longbowHealth
-        mageQty
-        mageHealth
-        arcanistQty
-        arcanistHealth
-        lightInfantryQty
-        lightInfantryHealth
-        heavyInfantryQty
-        heavyInfantryHealth
-        orderId
-        bastionArrivalBlock
-        bastionCurrentLocation
+      latitude
+      longitude
+      locations {
+        locationId
         bastionId
+        defendingOrderId
+        takenBlock
+        armies {
+          armyId
+          realmId
+          xp
+          destinationRealmId
+          destinationArrivalTime
+          armyPacked
+          lastAttacked
+          xp
+          level
+          callSign
+          lightCavalryQty
+          lightCavalryHealth
+          heavyCavalryQty
+          heavyCavalryHealth
+          archerQty
+          archerHealth
+          longbowQty
+          longbowHealth
+          mageQty
+          mageHealth
+          arcanistQty
+          arcanistHealth
+          lightInfantryQty
+          lightInfantryHealth
+          heavyInfantryQty
+          heavyInfantryHealth
+          orderId
+          bastionArrivalBlock
+          bastionCurrentLocation
+          bastionId
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetBastionQuery__
@@ -2457,36 +3359,61 @@ export const GetBastionDocument = gql`
  *   },
  * });
  */
-export function useGetBastionQuery(baseOptions: Apollo.QueryHookOptions<GetBastionQuery, GetBastionQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetBastionQuery, GetBastionQueryVariables>(GetBastionDocument, options);
-      }
-export function useGetBastionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBastionQuery, GetBastionQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetBastionQuery, GetBastionQueryVariables>(GetBastionDocument, options);
-        }
+export function useGetBastionQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetBastionQuery,
+    GetBastionQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetBastionQuery, GetBastionQueryVariables>(
+    GetBastionDocument,
+    options
+  );
+}
+export function useGetBastionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBastionQuery,
+    GetBastionQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetBastionQuery, GetBastionQueryVariables>(
+    GetBastionDocument,
+    options
+  );
+}
 export type GetBastionQueryHookResult = ReturnType<typeof useGetBastionQuery>;
-export type GetBastionLazyQueryHookResult = ReturnType<typeof useGetBastionLazyQuery>;
-export type GetBastionQueryResult = Apollo.QueryResult<GetBastionQuery, GetBastionQueryVariables>;
+export type GetBastionLazyQueryHookResult = ReturnType<
+  typeof useGetBastionLazyQuery
+>;
+export type GetBastionQueryResult = Apollo.QueryResult<
+  GetBastionQuery,
+  GetBastionQueryVariables
+>;
 export const GetBastionHistoryDocument = gql`
-    query getBastionHistory($filter: BastionHistoryWhereInput, $take: Float, $skip: Float) @api(name: starkIndexer) {
-  getBastionHistory(filter: $filter, take: $take, skip: $skip) {
-    bastionId
-    realmHistoryEventId
-    realmHistoryEventType
-    realmHistory {
-      id
-      eventId
-      eventType
-      realmId
-      realmOwner
-      data
-      timestamp
-      transactionHash
+  query getBastionHistory(
+    $filter: BastionHistoryWhereInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    getBastionHistory(filter: $filter, take: $take, skip: $skip) {
+      bastionId
+      realmHistoryEventId
+      realmHistoryEventType
+      realmHistory {
+        id
+        eventId
+        eventType
+        realmId
+        realmOwner
+        data
+        timestamp
+        transactionHash
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetBastionHistoryQuery__
@@ -2506,24 +3433,48 @@ export const GetBastionHistoryDocument = gql`
  *   },
  * });
  */
-export function useGetBastionHistoryQuery(baseOptions?: Apollo.QueryHookOptions<GetBastionHistoryQuery, GetBastionHistoryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetBastionHistoryQuery, GetBastionHistoryQueryVariables>(GetBastionHistoryDocument, options);
-      }
-export function useGetBastionHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBastionHistoryQuery, GetBastionHistoryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetBastionHistoryQuery, GetBastionHistoryQueryVariables>(GetBastionHistoryDocument, options);
-        }
-export type GetBastionHistoryQueryHookResult = ReturnType<typeof useGetBastionHistoryQuery>;
-export type GetBastionHistoryLazyQueryHookResult = ReturnType<typeof useGetBastionHistoryLazyQuery>;
-export type GetBastionHistoryQueryResult = Apollo.QueryResult<GetBastionHistoryQuery, GetBastionHistoryQueryVariables>;
-export const GetDesiegeDocument = gql`
-    query getDesiege($id: Float!) @api(name: starkIndexer) {
-  getDesiege(id: $id) {
-    ...DesiegeFragment
-  }
+export function useGetBastionHistoryQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetBastionHistoryQuery,
+    GetBastionHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetBastionHistoryQuery,
+    GetBastionHistoryQueryVariables
+  >(GetBastionHistoryDocument, options);
 }
-    ${DesiegeFragmentFragmentDoc}`;
+export function useGetBastionHistoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBastionHistoryQuery,
+    GetBastionHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetBastionHistoryQuery,
+    GetBastionHistoryQueryVariables
+  >(GetBastionHistoryDocument, options);
+}
+export type GetBastionHistoryQueryHookResult = ReturnType<
+  typeof useGetBastionHistoryQuery
+>;
+export type GetBastionHistoryLazyQueryHookResult = ReturnType<
+  typeof useGetBastionHistoryLazyQuery
+>;
+export type GetBastionHistoryQueryResult = Apollo.QueryResult<
+  GetBastionHistoryQuery,
+  GetBastionHistoryQueryVariables
+>;
+export const GetDesiegeDocument = gql`
+  query getDesiege($id: Float!) @api(name: starkIndexer) {
+    getDesiege(id: $id) {
+      ...DesiegeFragment
+    }
+  }
+  ${DesiegeFragmentFragmentDoc}
+`;
 
 /**
  * __useGetDesiegeQuery__
@@ -2541,31 +3492,52 @@ export const GetDesiegeDocument = gql`
  *   },
  * });
  */
-export function useGetDesiegeQuery(baseOptions: Apollo.QueryHookOptions<GetDesiegeQuery, GetDesiegeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(GetDesiegeDocument, options);
-      }
-export function useGetDesiegeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDesiegeQuery, GetDesiegeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(GetDesiegeDocument, options);
-        }
-export type GetDesiegeQueryHookResult = ReturnType<typeof useGetDesiegeQuery>;
-export type GetDesiegeLazyQueryHookResult = ReturnType<typeof useGetDesiegeLazyQuery>;
-export type GetDesiegeQueryResult = Apollo.QueryResult<GetDesiegeQuery, GetDesiegeQueryVariables>;
-export const GetExchangeRatesDocument = gql`
-    query getExchangeRates @api(name: starkIndexer) {
-  getExchangeRates {
-    tokenId
-    tokenName
-    amount
-    buyAmount
-    sellAmount
-    currencyReserve
-    tokenReserve
-    percentChange24Hr
-  }
+export function useGetDesiegeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetDesiegeQuery,
+    GetDesiegeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(
+    GetDesiegeDocument,
+    options
+  );
 }
-    `;
+export function useGetDesiegeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetDesiegeQuery,
+    GetDesiegeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(
+    GetDesiegeDocument,
+    options
+  );
+}
+export type GetDesiegeQueryHookResult = ReturnType<typeof useGetDesiegeQuery>;
+export type GetDesiegeLazyQueryHookResult = ReturnType<
+  typeof useGetDesiegeLazyQuery
+>;
+export type GetDesiegeQueryResult = Apollo.QueryResult<
+  GetDesiegeQuery,
+  GetDesiegeQueryVariables
+>;
+export const GetExchangeRatesDocument = gql`
+  query getExchangeRates @api(name: starkIndexer) {
+    getExchangeRates {
+      tokenId
+      tokenName
+      amount
+      buyAmount
+      sellAmount
+      currencyReserve
+      tokenReserve
+      percentChange24Hr
+    }
+  }
+`;
 
 /**
  * __useGetExchangeRatesQuery__
@@ -2582,30 +3554,54 @@ export const GetExchangeRatesDocument = gql`
  *   },
  * });
  */
-export function useGetExchangeRatesQuery(baseOptions?: Apollo.QueryHookOptions<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>(GetExchangeRatesDocument, options);
-      }
-export function useGetExchangeRatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>(GetExchangeRatesDocument, options);
-        }
-export type GetExchangeRatesQueryHookResult = ReturnType<typeof useGetExchangeRatesQuery>;
-export type GetExchangeRatesLazyQueryHookResult = ReturnType<typeof useGetExchangeRatesLazyQuery>;
-export type GetExchangeRatesQueryResult = Apollo.QueryResult<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>;
-export const GetHistoricPriceDataDocument = gql`
-    query getHistoricPriceData($dateFrom: String!, $dateTo: String!) @api(name: starkIndexer) {
-  exchangeRates(
-    where: {date: {gt: $dateFrom, lte: $dateTo}}
-    orderBy: {date: asc}
-  ) {
-    date
-    hour
-    tokenId
-    amount
-  }
+export function useGetExchangeRatesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetExchangeRatesQuery,
+    GetExchangeRatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>(
+    GetExchangeRatesDocument,
+    options
+  );
 }
-    `;
+export function useGetExchangeRatesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetExchangeRatesQuery,
+    GetExchangeRatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetExchangeRatesQuery,
+    GetExchangeRatesQueryVariables
+  >(GetExchangeRatesDocument, options);
+}
+export type GetExchangeRatesQueryHookResult = ReturnType<
+  typeof useGetExchangeRatesQuery
+>;
+export type GetExchangeRatesLazyQueryHookResult = ReturnType<
+  typeof useGetExchangeRatesLazyQuery
+>;
+export type GetExchangeRatesQueryResult = Apollo.QueryResult<
+  GetExchangeRatesQuery,
+  GetExchangeRatesQueryVariables
+>;
+export const GetHistoricPriceDataDocument = gql`
+  query getHistoricPriceData($dateFrom: String!, $dateTo: String!)
+  @api(name: starkIndexer) {
+    exchangeRates(
+      where: { date: { gt: $dateFrom, lte: $dateTo } }
+      orderBy: { date: asc }
+    ) {
+      date
+      hour
+      tokenId
+      amount
+    }
+  }
+`;
 
 /**
  * __useGetHistoricPriceDataQuery__
@@ -2624,24 +3620,52 @@ export const GetHistoricPriceDataDocument = gql`
  *   },
  * });
  */
-export function useGetHistoricPriceDataQuery(baseOptions: Apollo.QueryHookOptions<GetHistoricPriceDataQuery, GetHistoricPriceDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetHistoricPriceDataQuery, GetHistoricPriceDataQueryVariables>(GetHistoricPriceDataDocument, options);
-      }
-export function useGetHistoricPriceDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetHistoricPriceDataQuery, GetHistoricPriceDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetHistoricPriceDataQuery, GetHistoricPriceDataQueryVariables>(GetHistoricPriceDataDocument, options);
-        }
-export type GetHistoricPriceDataQueryHookResult = ReturnType<typeof useGetHistoricPriceDataQuery>;
-export type GetHistoricPriceDataLazyQueryHookResult = ReturnType<typeof useGetHistoricPriceDataLazyQuery>;
-export type GetHistoricPriceDataQueryResult = Apollo.QueryResult<GetHistoricPriceDataQuery, GetHistoricPriceDataQueryVariables>;
-export const GetLoreEntitiesDocument = gql`
-    query getLoreEntities($filter: LoreEntityWhereInput, $take: Float, $skip: Float) @api(name: starkIndexer) {
-  getLoreEntities(filter: $filter, take: $take, skip: $skip) {
-    ...LoreEntityFragment
-  }
+export function useGetHistoricPriceDataQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >(GetHistoricPriceDataDocument, options);
 }
-    ${LoreEntityFragmentFragmentDoc}`;
+export function useGetHistoricPriceDataLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >(GetHistoricPriceDataDocument, options);
+}
+export type GetHistoricPriceDataQueryHookResult = ReturnType<
+  typeof useGetHistoricPriceDataQuery
+>;
+export type GetHistoricPriceDataLazyQueryHookResult = ReturnType<
+  typeof useGetHistoricPriceDataLazyQuery
+>;
+export type GetHistoricPriceDataQueryResult = Apollo.QueryResult<
+  GetHistoricPriceDataQuery,
+  GetHistoricPriceDataQueryVariables
+>;
+export const GetLoreEntitiesDocument = gql`
+  query getLoreEntities(
+    $filter: LoreEntityWhereInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    getLoreEntities(filter: $filter, take: $take, skip: $skip) {
+      ...LoreEntityFragment
+    }
+  }
+  ${LoreEntityFragmentFragmentDoc}
+`;
 
 /**
  * __useGetLoreEntitiesQuery__
@@ -2661,27 +3685,51 @@ export const GetLoreEntitiesDocument = gql`
  *   },
  * });
  */
-export function useGetLoreEntitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetLoreEntitiesQuery, GetLoreEntitiesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetLoreEntitiesQuery, GetLoreEntitiesQueryVariables>(GetLoreEntitiesDocument, options);
-      }
-export function useGetLoreEntitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLoreEntitiesQuery, GetLoreEntitiesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetLoreEntitiesQuery, GetLoreEntitiesQueryVariables>(GetLoreEntitiesDocument, options);
-        }
-export type GetLoreEntitiesQueryHookResult = ReturnType<typeof useGetLoreEntitiesQuery>;
-export type GetLoreEntitiesLazyQueryHookResult = ReturnType<typeof useGetLoreEntitiesLazyQuery>;
-export type GetLoreEntitiesQueryResult = Apollo.QueryResult<GetLoreEntitiesQuery, GetLoreEntitiesQueryVariables>;
+export function useGetLoreEntitiesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetLoreEntitiesQuery,
+    GetLoreEntitiesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLoreEntitiesQuery, GetLoreEntitiesQueryVariables>(
+    GetLoreEntitiesDocument,
+    options
+  );
+}
+export function useGetLoreEntitiesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLoreEntitiesQuery,
+    GetLoreEntitiesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetLoreEntitiesQuery,
+    GetLoreEntitiesQueryVariables
+  >(GetLoreEntitiesDocument, options);
+}
+export type GetLoreEntitiesQueryHookResult = ReturnType<
+  typeof useGetLoreEntitiesQuery
+>;
+export type GetLoreEntitiesLazyQueryHookResult = ReturnType<
+  typeof useGetLoreEntitiesLazyQuery
+>;
+export type GetLoreEntitiesQueryResult = Apollo.QueryResult<
+  GetLoreEntitiesQuery,
+  GetLoreEntitiesQueryVariables
+>;
 export const GetLoreEntityDocument = gql`
-    query getLoreEntity($id: Float!) @api(name: starkIndexer) {
-  getLoreEntity(entityId: $id) {
-    ...LoreEntityFragment
-    revisions {
-      markdown
+  query getLoreEntity($id: Float!) @api(name: starkIndexer) {
+    getLoreEntity(entityId: $id) {
+      ...LoreEntityFragment
+      revisions {
+        markdown
+      }
     }
   }
-}
-    ${LoreEntityFragmentFragmentDoc}`;
+  ${LoreEntityFragmentFragmentDoc}
+`;
 
 /**
  * __useGetLoreEntityQuery__
@@ -2699,24 +3747,48 @@ export const GetLoreEntityDocument = gql`
  *   },
  * });
  */
-export function useGetLoreEntityQuery(baseOptions: Apollo.QueryHookOptions<GetLoreEntityQuery, GetLoreEntityQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetLoreEntityQuery, GetLoreEntityQueryVariables>(GetLoreEntityDocument, options);
-      }
-export function useGetLoreEntityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLoreEntityQuery, GetLoreEntityQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetLoreEntityQuery, GetLoreEntityQueryVariables>(GetLoreEntityDocument, options);
-        }
-export type GetLoreEntityQueryHookResult = ReturnType<typeof useGetLoreEntityQuery>;
-export type GetLoreEntityLazyQueryHookResult = ReturnType<typeof useGetLoreEntityLazyQuery>;
-export type GetLoreEntityQueryResult = Apollo.QueryResult<GetLoreEntityQuery, GetLoreEntityQueryVariables>;
-export const GetLorePoisDocument = gql`
-    query getLorePois($take: Float, $skip: Float) @api(name: starkIndexer) {
-  getLorePois(take: $take, skip: $skip) {
-    ...LorePoiFragment
-  }
+export function useGetLoreEntityQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetLoreEntityQuery,
+    GetLoreEntityQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLoreEntityQuery, GetLoreEntityQueryVariables>(
+    GetLoreEntityDocument,
+    options
+  );
 }
-    ${LorePoiFragmentFragmentDoc}`;
+export function useGetLoreEntityLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLoreEntityQuery,
+    GetLoreEntityQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLoreEntityQuery, GetLoreEntityQueryVariables>(
+    GetLoreEntityDocument,
+    options
+  );
+}
+export type GetLoreEntityQueryHookResult = ReturnType<
+  typeof useGetLoreEntityQuery
+>;
+export type GetLoreEntityLazyQueryHookResult = ReturnType<
+  typeof useGetLoreEntityLazyQuery
+>;
+export type GetLoreEntityQueryResult = Apollo.QueryResult<
+  GetLoreEntityQuery,
+  GetLoreEntityQueryVariables
+>;
+export const GetLorePoisDocument = gql`
+  query getLorePois($take: Float, $skip: Float) @api(name: starkIndexer) {
+    getLorePois(take: $take, skip: $skip) {
+      ...LorePoiFragment
+    }
+  }
+  ${LorePoiFragmentFragmentDoc}
+`;
 
 /**
  * __useGetLorePoisQuery__
@@ -2735,34 +3807,58 @@ export const GetLorePoisDocument = gql`
  *   },
  * });
  */
-export function useGetLorePoisQuery(baseOptions?: Apollo.QueryHookOptions<GetLorePoisQuery, GetLorePoisQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetLorePoisQuery, GetLorePoisQueryVariables>(GetLorePoisDocument, options);
-      }
-export function useGetLorePoisLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLorePoisQuery, GetLorePoisQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetLorePoisQuery, GetLorePoisQueryVariables>(GetLorePoisDocument, options);
-        }
-export type GetLorePoisQueryHookResult = ReturnType<typeof useGetLorePoisQuery>;
-export type GetLorePoisLazyQueryHookResult = ReturnType<typeof useGetLorePoisLazyQuery>;
-export type GetLorePoisQueryResult = Apollo.QueryResult<GetLorePoisQuery, GetLorePoisQueryVariables>;
-export const GetAccountDocument = gql`
-    query getAccount($account: String!, $realmIds: [Int!]) @api(name: starkIndexer) {
-  ownedRealmsCount: realmsCount(filter: {ownerL2: {equals: $account}})
-  settledRealmsCount: realmsCount(filter: {settledOwner: {equals: $account}})
-  accountHistory: getRealmHistory(filter: {realmId: {in: $realmIds}}) {
-    id
-    eventType
-    eventId
-    realmId
-    realmOwner
-    realmName
-    realmOrder
-    data
-    timestamp
-  }
+export function useGetLorePoisQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetLorePoisQuery,
+    GetLorePoisQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLorePoisQuery, GetLorePoisQueryVariables>(
+    GetLorePoisDocument,
+    options
+  );
 }
-    `;
+export function useGetLorePoisLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLorePoisQuery,
+    GetLorePoisQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLorePoisQuery, GetLorePoisQueryVariables>(
+    GetLorePoisDocument,
+    options
+  );
+}
+export type GetLorePoisQueryHookResult = ReturnType<typeof useGetLorePoisQuery>;
+export type GetLorePoisLazyQueryHookResult = ReturnType<
+  typeof useGetLorePoisLazyQuery
+>;
+export type GetLorePoisQueryResult = Apollo.QueryResult<
+  GetLorePoisQuery,
+  GetLorePoisQueryVariables
+>;
+export const GetAccountDocument = gql`
+  query getAccount($account: String!, $realmIds: [Int!])
+  @api(name: starkIndexer) {
+    ownedRealmsCount: realmsCount(filter: { ownerL2: { equals: $account } })
+    settledRealmsCount: realmsCount(
+      filter: { settledOwner: { equals: $account } }
+    )
+    accountHistory: getRealmHistory(filter: { realmId: { in: $realmIds } }) {
+      id
+      eventType
+      eventId
+      realmId
+      realmOwner
+      realmName
+      realmOrder
+      data
+      timestamp
+    }
+  }
+`;
 
 /**
  * __useGetAccountQuery__
@@ -2781,47 +3877,68 @@ export const GetAccountDocument = gql`
  *   },
  * });
  */
-export function useGetAccountQuery(baseOptions: Apollo.QueryHookOptions<GetAccountQuery, GetAccountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAccountQuery, GetAccountQueryVariables>(GetAccountDocument, options);
-      }
-export function useGetAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAccountQuery, GetAccountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAccountQuery, GetAccountQueryVariables>(GetAccountDocument, options);
-        }
-export type GetAccountQueryHookResult = ReturnType<typeof useGetAccountQuery>;
-export type GetAccountLazyQueryHookResult = ReturnType<typeof useGetAccountLazyQuery>;
-export type GetAccountQueryResult = Apollo.QueryResult<GetAccountQuery, GetAccountQueryVariables>;
-export const GetGameConstantsDocument = gql`
-    query getGameConstants @api(name: starkIndexer) {
-  battalionStats: battalionStats {
-    battalionId
-    battalionName
-    type
-    combatType
-    value
-    requiredBuildingId
-    requiredBuildingName
-  }
-  buildingCosts: getBuildingCosts {
-    buildingId
-    buildingName
-    amount
-    resources
-  }
-  battalionCosts {
-    battalionId
-    battalionName
-    resources
-  }
-  laborAndToolCosts: getResourceLaborAndToolCosts {
-    resourceId
-    resourceName
-    tier
-    costs
-  }
+export function useGetAccountQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetAccountQuery,
+    GetAccountQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAccountQuery, GetAccountQueryVariables>(
+    GetAccountDocument,
+    options
+  );
 }
-    `;
+export function useGetAccountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAccountQuery,
+    GetAccountQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAccountQuery, GetAccountQueryVariables>(
+    GetAccountDocument,
+    options
+  );
+}
+export type GetAccountQueryHookResult = ReturnType<typeof useGetAccountQuery>;
+export type GetAccountLazyQueryHookResult = ReturnType<
+  typeof useGetAccountLazyQuery
+>;
+export type GetAccountQueryResult = Apollo.QueryResult<
+  GetAccountQuery,
+  GetAccountQueryVariables
+>;
+export const GetGameConstantsDocument = gql`
+  query getGameConstants @api(name: starkIndexer) {
+    battalionStats: battalionStats {
+      battalionId
+      battalionName
+      type
+      combatType
+      value
+      requiredBuildingId
+      requiredBuildingName
+    }
+    buildingCosts: getBuildingCosts {
+      buildingId
+      buildingName
+      amount
+      resources
+    }
+    battalionCosts {
+      battalionId
+      battalionName
+      resources
+    }
+    laborAndToolCosts: getResourceLaborAndToolCosts {
+      resourceId
+      resourceName
+      tier
+      costs
+    }
+  }
+`;
 
 /**
  * __useGetGameConstantsQuery__
@@ -2838,24 +3955,48 @@ export const GetGameConstantsDocument = gql`
  *   },
  * });
  */
-export function useGetGameConstantsQuery(baseOptions?: Apollo.QueryHookOptions<GetGameConstantsQuery, GetGameConstantsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetGameConstantsQuery, GetGameConstantsQueryVariables>(GetGameConstantsDocument, options);
-      }
-export function useGetGameConstantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGameConstantsQuery, GetGameConstantsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetGameConstantsQuery, GetGameConstantsQueryVariables>(GetGameConstantsDocument, options);
-        }
-export type GetGameConstantsQueryHookResult = ReturnType<typeof useGetGameConstantsQuery>;
-export type GetGameConstantsLazyQueryHookResult = ReturnType<typeof useGetGameConstantsLazyQuery>;
-export type GetGameConstantsQueryResult = Apollo.QueryResult<GetGameConstantsQuery, GetGameConstantsQueryVariables>;
-export const GetRealmDocument = gql`
-    query getRealm($id: Float!) @api(name: starkIndexer) {
-  realm(id: $id) {
-    ...RealmFragment
-  }
+export function useGetGameConstantsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetGameConstantsQuery, GetGameConstantsQueryVariables>(
+    GetGameConstantsDocument,
+    options
+  );
 }
-    ${RealmFragmentFragmentDoc}`;
+export function useGetGameConstantsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >(GetGameConstantsDocument, options);
+}
+export type GetGameConstantsQueryHookResult = ReturnType<
+  typeof useGetGameConstantsQuery
+>;
+export type GetGameConstantsLazyQueryHookResult = ReturnType<
+  typeof useGetGameConstantsLazyQuery
+>;
+export type GetGameConstantsQueryResult = Apollo.QueryResult<
+  GetGameConstantsQuery,
+  GetGameConstantsQueryVariables
+>;
+export const GetRealmDocument = gql`
+  query getRealm($id: Float!) @api(name: starkIndexer) {
+    realm(id: $id) {
+      ...RealmFragment
+    }
+  }
+  ${RealmFragmentFragmentDoc}
+`;
 
 /**
  * __useGetRealmQuery__
@@ -2873,38 +4014,56 @@ export const GetRealmDocument = gql`
  *   },
  * });
  */
-export function useGetRealmQuery(baseOptions: Apollo.QueryHookOptions<GetRealmQuery, GetRealmQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRealmQuery, GetRealmQueryVariables>(GetRealmDocument, options);
-      }
-export function useGetRealmLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmQuery, GetRealmQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRealmQuery, GetRealmQueryVariables>(GetRealmDocument, options);
-        }
+export function useGetRealmQuery(
+  baseOptions: Apollo.QueryHookOptions<GetRealmQuery, GetRealmQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetRealmQuery, GetRealmQueryVariables>(
+    GetRealmDocument,
+    options
+  );
+}
+export function useGetRealmLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmQuery,
+    GetRealmQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetRealmQuery, GetRealmQueryVariables>(
+    GetRealmDocument,
+    options
+  );
+}
 export type GetRealmQueryHookResult = ReturnType<typeof useGetRealmQuery>;
-export type GetRealmLazyQueryHookResult = ReturnType<typeof useGetRealmLazyQuery>;
-export type GetRealmQueryResult = Apollo.QueryResult<GetRealmQuery, GetRealmQueryVariables>;
+export type GetRealmLazyQueryHookResult = ReturnType<
+  typeof useGetRealmLazyQuery
+>;
+export type GetRealmQueryResult = Apollo.QueryResult<
+  GetRealmQuery,
+  GetRealmQueryVariables
+>;
 export const GetBuildingsByRealmIdDocument = gql`
-    query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
-  getBuildingsByRealmId(id: $id) {
-    realmId
-    buildingId
-    buildingName
-    buildingIntegrity
-    limit
-    limitTraitId
-    limitTraitName
-    count
-    population
-    food
-    culture
-    buildingCost {
-      amount
-      resources
+  query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
+    getBuildingsByRealmId(id: $id) {
+      realmId
+      buildingId
+      buildingName
+      buildingIntegrity
+      limit
+      limitTraitId
+      limitTraitName
+      count
+      population
+      food
+      culture
+      buildingCost {
+        amount
+        resources
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetBuildingsByRealmIdQuery__
@@ -2922,29 +4081,52 @@ export const GetBuildingsByRealmIdDocument = gql`
  *   },
  * });
  */
-export function useGetBuildingsByRealmIdQuery(baseOptions: Apollo.QueryHookOptions<GetBuildingsByRealmIdQuery, GetBuildingsByRealmIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetBuildingsByRealmIdQuery, GetBuildingsByRealmIdQueryVariables>(GetBuildingsByRealmIdDocument, options);
-      }
-export function useGetBuildingsByRealmIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBuildingsByRealmIdQuery, GetBuildingsByRealmIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetBuildingsByRealmIdQuery, GetBuildingsByRealmIdQueryVariables>(GetBuildingsByRealmIdDocument, options);
-        }
-export type GetBuildingsByRealmIdQueryHookResult = ReturnType<typeof useGetBuildingsByRealmIdQuery>;
-export type GetBuildingsByRealmIdLazyQueryHookResult = ReturnType<typeof useGetBuildingsByRealmIdLazyQuery>;
-export type GetBuildingsByRealmIdQueryResult = Apollo.QueryResult<GetBuildingsByRealmIdQuery, GetBuildingsByRealmIdQueryVariables>;
-export const GetFoodByRealmIdDocument = gql`
-    query getFoodByRealmId($id: Float!) @api(name: starkIndexer) {
-  getFoodByRealmId(id: $id) {
-    realmId
-    buildingId
-    buildingName
-    qty
-    harvests
-    createdAt
-  }
+export function useGetBuildingsByRealmIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >(GetBuildingsByRealmIdDocument, options);
 }
-    `;
+export function useGetBuildingsByRealmIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >(GetBuildingsByRealmIdDocument, options);
+}
+export type GetBuildingsByRealmIdQueryHookResult = ReturnType<
+  typeof useGetBuildingsByRealmIdQuery
+>;
+export type GetBuildingsByRealmIdLazyQueryHookResult = ReturnType<
+  typeof useGetBuildingsByRealmIdLazyQuery
+>;
+export type GetBuildingsByRealmIdQueryResult = Apollo.QueryResult<
+  GetBuildingsByRealmIdQuery,
+  GetBuildingsByRealmIdQueryVariables
+>;
+export const GetFoodByRealmIdDocument = gql`
+  query getFoodByRealmId($id: Float!) @api(name: starkIndexer) {
+    getFoodByRealmId(id: $id) {
+      realmId
+      buildingId
+      buildingName
+      qty
+      harvests
+      createdAt
+    }
+  }
+`;
 
 /**
  * __useGetFoodByRealmIdQuery__
@@ -2962,31 +4144,58 @@ export const GetFoodByRealmIdDocument = gql`
  *   },
  * });
  */
-export function useGetFoodByRealmIdQuery(baseOptions: Apollo.QueryHookOptions<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>(GetFoodByRealmIdDocument, options);
-      }
-export function useGetFoodByRealmIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>(GetFoodByRealmIdDocument, options);
-        }
-export type GetFoodByRealmIdQueryHookResult = ReturnType<typeof useGetFoodByRealmIdQuery>;
-export type GetFoodByRealmIdLazyQueryHookResult = ReturnType<typeof useGetFoodByRealmIdLazyQuery>;
-export type GetFoodByRealmIdQueryResult = Apollo.QueryResult<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>;
-export const GetRealmHistoryDocument = gql`
-    query getRealmHistory($filter: RealmHistoryWhereInput, $take: Float, $skip: Float) @api(name: starkIndexer) {
-  getRealmHistory(filter: $filter, take: $take, skip: $skip) {
-    id
-    eventId
-    eventType
-    realmId
-    realmOwner
-    data
-    timestamp
-    transactionHash
-  }
+export function useGetFoodByRealmIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetFoodByRealmIdQuery,
+    GetFoodByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>(
+    GetFoodByRealmIdDocument,
+    options
+  );
 }
-    `;
+export function useGetFoodByRealmIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetFoodByRealmIdQuery,
+    GetFoodByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetFoodByRealmIdQuery,
+    GetFoodByRealmIdQueryVariables
+  >(GetFoodByRealmIdDocument, options);
+}
+export type GetFoodByRealmIdQueryHookResult = ReturnType<
+  typeof useGetFoodByRealmIdQuery
+>;
+export type GetFoodByRealmIdLazyQueryHookResult = ReturnType<
+  typeof useGetFoodByRealmIdLazyQuery
+>;
+export type GetFoodByRealmIdQueryResult = Apollo.QueryResult<
+  GetFoodByRealmIdQuery,
+  GetFoodByRealmIdQueryVariables
+>;
+export const GetRealmHistoryDocument = gql`
+  query getRealmHistory(
+    $filter: RealmHistoryWhereInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    getRealmHistory(filter: $filter, take: $take, skip: $skip) {
+      id
+      eventId
+      eventType
+      realmId
+      realmOwner
+      data
+      timestamp
+      transactionHash
+    }
+  }
+`;
 
 /**
  * __useGetRealmHistoryQuery__
@@ -3006,35 +4215,65 @@ export const GetRealmHistoryDocument = gql`
  *   },
  * });
  */
-export function useGetRealmHistoryQuery(baseOptions?: Apollo.QueryHookOptions<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>(GetRealmHistoryDocument, options);
-      }
-export function useGetRealmHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>(GetRealmHistoryDocument, options);
-        }
-export type GetRealmHistoryQueryHookResult = ReturnType<typeof useGetRealmHistoryQuery>;
-export type GetRealmHistoryLazyQueryHookResult = ReturnType<typeof useGetRealmHistoryLazyQuery>;
-export type GetRealmHistoryQueryResult = Apollo.QueryResult<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>;
+export function useGetRealmHistoryQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetRealmHistoryQuery,
+    GetRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>(
+    GetRealmHistoryDocument,
+    options
+  );
+}
+export function useGetRealmHistoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmHistoryQuery,
+    GetRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetRealmHistoryQuery,
+    GetRealmHistoryQueryVariables
+  >(GetRealmHistoryDocument, options);
+}
+export type GetRealmHistoryQueryHookResult = ReturnType<
+  typeof useGetRealmHistoryQuery
+>;
+export type GetRealmHistoryLazyQueryHookResult = ReturnType<
+  typeof useGetRealmHistoryLazyQuery
+>;
+export type GetRealmHistoryQueryResult = Apollo.QueryResult<
+  GetRealmHistoryQuery,
+  GetRealmHistoryQueryVariables
+>;
 export const GroupByRealmHistoryDocument = gql`
-    query groupByRealmHistory($by: [RealmHistoryScalarFieldEnum!]!, $orderBy: [RealmHistoryOrderByWithAggregationInput!], $where: RealmHistoryWhereInput, $take: Int, $skip: Int, $isOwner: Boolean!) @api(name: starkIndexer) {
-  groupByRealmHistory(
-    by: $by
-    where: $where
-    orderBy: $orderBy
-    take: $take
-    skip: $skip
-  ) {
-    realmId
-    realmOwner @include(if: $isOwner)
-    realmName @include(if: $isOwner)
-    _count {
-      _all
+  query groupByRealmHistory(
+    $by: [RealmHistoryScalarFieldEnum!]!
+    $orderBy: [RealmHistoryOrderByWithAggregationInput!]
+    $where: RealmHistoryWhereInput
+    $take: Int
+    $skip: Int
+    $isOwner: Boolean!
+  ) @api(name: starkIndexer) {
+    groupByRealmHistory(
+      by: $by
+      where: $where
+      orderBy: $orderBy
+      take: $take
+      skip: $skip
+    ) {
+      realmId
+      realmOwner @include(if: $isOwner)
+      realmName @include(if: $isOwner)
+      _count {
+        _all
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGroupByRealmHistoryQuery__
@@ -3057,46 +4296,70 @@ export const GroupByRealmHistoryDocument = gql`
  *   },
  * });
  */
-export function useGroupByRealmHistoryQuery(baseOptions: Apollo.QueryHookOptions<GroupByRealmHistoryQuery, GroupByRealmHistoryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GroupByRealmHistoryQuery, GroupByRealmHistoryQueryVariables>(GroupByRealmHistoryDocument, options);
-      }
-export function useGroupByRealmHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupByRealmHistoryQuery, GroupByRealmHistoryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GroupByRealmHistoryQuery, GroupByRealmHistoryQueryVariables>(GroupByRealmHistoryDocument, options);
-        }
-export type GroupByRealmHistoryQueryHookResult = ReturnType<typeof useGroupByRealmHistoryQuery>;
-export type GroupByRealmHistoryLazyQueryHookResult = ReturnType<typeof useGroupByRealmHistoryLazyQuery>;
-export type GroupByRealmHistoryQueryResult = Apollo.QueryResult<GroupByRealmHistoryQuery, GroupByRealmHistoryQueryVariables>;
+export function useGroupByRealmHistoryQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >(GroupByRealmHistoryDocument, options);
+}
+export function useGroupByRealmHistoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >(GroupByRealmHistoryDocument, options);
+}
+export type GroupByRealmHistoryQueryHookResult = ReturnType<
+  typeof useGroupByRealmHistoryQuery
+>;
+export type GroupByRealmHistoryLazyQueryHookResult = ReturnType<
+  typeof useGroupByRealmHistoryLazyQuery
+>;
+export type GroupByRealmHistoryQueryResult = Apollo.QueryResult<
+  GroupByRealmHistoryQuery,
+  GroupByRealmHistoryQueryVariables
+>;
 export const GetRealmCombatResultDocument = gql`
-    query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!) @api(name: starkIndexer) {
-  getRealmCombatResult(
-    defendRealmId: $defendRealmId
-    transactionHash: $transactionHash
-  ) {
-    defendRealmId
-    attackRealmId
-    transactionHash
-    history {
-      eventType
-      attackSquad
-      defendSquad
+  query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)
+  @api(name: starkIndexer) {
+    getRealmCombatResult(
+      defendRealmId: $defendRealmId
+      transactionHash: $transactionHash
+    ) {
+      defendRealmId
+      attackRealmId
+      transactionHash
+      history {
+        eventType
+        attackSquad
+        defendSquad
+        outcome
+        attackType
+        hitPoints
+        timestamp
+      }
+      resourcesPillaged {
+        resourceId
+        resourceName
+        amount
+      }
+      relicLost
       outcome
-      attackType
-      hitPoints
       timestamp
     }
-    resourcesPillaged {
-      resourceId
-      resourceName
-      amount
-    }
-    relicLost
-    outcome
-    timestamp
   }
-}
-    `;
+`;
 
 /**
  * __useGetRealmCombatResultQuery__
@@ -3115,25 +4378,54 @@ export const GetRealmCombatResultDocument = gql`
  *   },
  * });
  */
-export function useGetRealmCombatResultQuery(baseOptions: Apollo.QueryHookOptions<GetRealmCombatResultQuery, GetRealmCombatResultQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRealmCombatResultQuery, GetRealmCombatResultQueryVariables>(GetRealmCombatResultDocument, options);
-      }
-export function useGetRealmCombatResultLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmCombatResultQuery, GetRealmCombatResultQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRealmCombatResultQuery, GetRealmCombatResultQueryVariables>(GetRealmCombatResultDocument, options);
-        }
-export type GetRealmCombatResultQueryHookResult = ReturnType<typeof useGetRealmCombatResultQuery>;
-export type GetRealmCombatResultLazyQueryHookResult = ReturnType<typeof useGetRealmCombatResultLazyQuery>;
-export type GetRealmCombatResultQueryResult = Apollo.QueryResult<GetRealmCombatResultQuery, GetRealmCombatResultQueryVariables>;
-export const GetRealmsDocument = gql`
-    query getRealms($filter: RealmWhereInput, $orderBy: RealmOrderByWithRelationInput, $take: Float, $skip: Float) @api(name: starkIndexer) {
-  realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
-    ...RealmFragment
-  }
-  total: realmsCount(filter: $filter)
+export function useGetRealmCombatResultQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >(GetRealmCombatResultDocument, options);
 }
-    ${RealmFragmentFragmentDoc}`;
+export function useGetRealmCombatResultLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >(GetRealmCombatResultDocument, options);
+}
+export type GetRealmCombatResultQueryHookResult = ReturnType<
+  typeof useGetRealmCombatResultQuery
+>;
+export type GetRealmCombatResultLazyQueryHookResult = ReturnType<
+  typeof useGetRealmCombatResultLazyQuery
+>;
+export type GetRealmCombatResultQueryResult = Apollo.QueryResult<
+  GetRealmCombatResultQuery,
+  GetRealmCombatResultQueryVariables
+>;
+export const GetRealmsDocument = gql`
+  query getRealms(
+    $filter: RealmWhereInput
+    $orderBy: RealmOrderByWithRelationInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+      ...RealmFragment
+    }
+    total: realmsCount(filter: $filter)
+  }
+  ${RealmFragmentFragmentDoc}
+`;
 
 /**
  * __useGetRealmsQuery__
@@ -3154,29 +4446,54 @@ export const GetRealmsDocument = gql`
  *   },
  * });
  */
-export function useGetRealmsQuery(baseOptions?: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRealmsQuery, GetRealmsQueryVariables>(GetRealmsDocument, options);
-      }
-export function useGetRealmsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRealmsQuery, GetRealmsQueryVariables>(GetRealmsDocument, options);
-        }
-export type GetRealmsQueryHookResult = ReturnType<typeof useGetRealmsQuery>;
-export type GetRealmsLazyQueryHookResult = ReturnType<typeof useGetRealmsLazyQuery>;
-export type GetRealmsQueryResult = Apollo.QueryResult<GetRealmsQuery, GetRealmsQueryVariables>;
-export const GetRealmsWithTravelsDocument = gql`
-    query getRealmsWithTravels($filter: RealmWhereInput, $travelsWhere: TravelWhereInput, $orderBy: RealmOrderByWithRelationInput, $take: Float, $skip: Float) @api(name: starkIndexer) {
-  realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
-    ...RealmFragment
-  }
-  travels(where: $travelsWhere) {
-    ...TravelFragment
-  }
-  total: realmsCount(filter: $filter)
+export function useGetRealmsQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetRealmsQuery, GetRealmsQueryVariables>(
+    GetRealmsDocument,
+    options
+  );
 }
-    ${RealmFragmentFragmentDoc}
-${TravelFragmentFragmentDoc}`;
+export function useGetRealmsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmsQuery,
+    GetRealmsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetRealmsQuery, GetRealmsQueryVariables>(
+    GetRealmsDocument,
+    options
+  );
+}
+export type GetRealmsQueryHookResult = ReturnType<typeof useGetRealmsQuery>;
+export type GetRealmsLazyQueryHookResult = ReturnType<
+  typeof useGetRealmsLazyQuery
+>;
+export type GetRealmsQueryResult = Apollo.QueryResult<
+  GetRealmsQuery,
+  GetRealmsQueryVariables
+>;
+export const GetRealmsWithTravelsDocument = gql`
+  query getRealmsWithTravels(
+    $filter: RealmWhereInput
+    $travelsWhere: TravelWhereInput
+    $orderBy: RealmOrderByWithRelationInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+      ...RealmFragment
+    }
+    travels(where: $travelsWhere) {
+      ...TravelFragment
+    }
+    total: realmsCount(filter: $filter)
+  }
+  ${RealmFragmentFragmentDoc}
+  ${TravelFragmentFragmentDoc}
+`;
 
 /**
  * __useGetRealmsWithTravelsQuery__
@@ -3198,36 +4515,59 @@ ${TravelFragmentFragmentDoc}`;
  *   },
  * });
  */
-export function useGetRealmsWithTravelsQuery(baseOptions?: Apollo.QueryHookOptions<GetRealmsWithTravelsQuery, GetRealmsWithTravelsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRealmsWithTravelsQuery, GetRealmsWithTravelsQueryVariables>(GetRealmsWithTravelsDocument, options);
-      }
-export function useGetRealmsWithTravelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmsWithTravelsQuery, GetRealmsWithTravelsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRealmsWithTravelsQuery, GetRealmsWithTravelsQueryVariables>(GetRealmsWithTravelsDocument, options);
-        }
-export type GetRealmsWithTravelsQueryHookResult = ReturnType<typeof useGetRealmsWithTravelsQuery>;
-export type GetRealmsWithTravelsLazyQueryHookResult = ReturnType<typeof useGetRealmsWithTravelsLazyQuery>;
-export type GetRealmsWithTravelsQueryResult = Apollo.QueryResult<GetRealmsWithTravelsQuery, GetRealmsWithTravelsQueryVariables>;
+export function useGetRealmsWithTravelsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >(GetRealmsWithTravelsDocument, options);
+}
+export function useGetRealmsWithTravelsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >(GetRealmsWithTravelsDocument, options);
+}
+export type GetRealmsWithTravelsQueryHookResult = ReturnType<
+  typeof useGetRealmsWithTravelsQuery
+>;
+export type GetRealmsWithTravelsLazyQueryHookResult = ReturnType<
+  typeof useGetRealmsWithTravelsLazyQuery
+>;
+export type GetRealmsWithTravelsQueryResult = Apollo.QueryResult<
+  GetRealmsWithTravelsQuery,
+  GetRealmsWithTravelsQueryVariables
+>;
 export const GetTroopStatsDocument = gql`
-    query getTroopStats @api(name: starkIndexer) {
-  getTroopStats {
-    troopId
-    troopName
-    type
-    tier
-    agility
-    attack
-    armor
-    vitality
-    wisdom
-    troopCost {
-      amount
-      resources
+  query getTroopStats @api(name: starkIndexer) {
+    getTroopStats {
+      troopId
+      troopName
+      type
+      tier
+      agility
+      attack
+      armor
+      vitality
+      wisdom
+      troopCost {
+        amount
+        resources
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetTroopStatsQuery__
@@ -3244,41 +4584,75 @@ export const GetTroopStatsDocument = gql`
  *   },
  * });
  */
-export function useGetTroopStatsQuery(baseOptions?: Apollo.QueryHookOptions<GetTroopStatsQuery, GetTroopStatsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTroopStatsQuery, GetTroopStatsQueryVariables>(GetTroopStatsDocument, options);
-      }
-export function useGetTroopStatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTroopStatsQuery, GetTroopStatsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTroopStatsQuery, GetTroopStatsQueryVariables>(GetTroopStatsDocument, options);
-        }
-export type GetTroopStatsQueryHookResult = ReturnType<typeof useGetTroopStatsQuery>;
-export type GetTroopStatsLazyQueryHookResult = ReturnType<typeof useGetTroopStatsLazyQuery>;
-export type GetTroopStatsQueryResult = Apollo.QueryResult<GetTroopStatsQuery, GetTroopStatsQueryVariables>;
+export function useGetTroopStatsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTroopStatsQuery,
+    GetTroopStatsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTroopStatsQuery, GetTroopStatsQueryVariables>(
+    GetTroopStatsDocument,
+    options
+  );
+}
+export function useGetTroopStatsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTroopStatsQuery,
+    GetTroopStatsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetTroopStatsQuery, GetTroopStatsQueryVariables>(
+    GetTroopStatsDocument,
+    options
+  );
+}
+export type GetTroopStatsQueryHookResult = ReturnType<
+  typeof useGetTroopStatsQuery
+>;
+export type GetTroopStatsLazyQueryHookResult = ReturnType<
+  typeof useGetTroopStatsLazyQuery
+>;
+export type GetTroopStatsQueryResult = Apollo.QueryResult<
+  GetTroopStatsQuery,
+  GetTroopStatsQueryVariables
+>;
 export const GetTravelsDocument = gql`
-    query GetTravels($where: TravelWhereInput, $orderBy: [TravelOrderByWithRelationInput!], $take: Int, $skip: Int) @api(name: starkIndexer) {
-  payload: travels(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
-    ...TravelFragment
-    startTime: timestamp
-    endTime: destinationArrivalTime
-    originRealm {
-      realmId
-      longitude
-      latitude
-    }
-    locationRealm {
-      realmId
-      longitude
-      latitude
-    }
-    destinationRealm {
-      realmId
-      longitude
-      latitude
+  query GetTravels(
+    $where: TravelWhereInput
+    $orderBy: [TravelOrderByWithRelationInput!]
+    $take: Int
+    $skip: Int
+  ) @api(name: starkIndexer) {
+    payload: travels(
+      where: $where
+      orderBy: $orderBy
+      take: $take
+      skip: $skip
+    ) {
+      ...TravelFragment
+      startTime: timestamp
+      endTime: destinationArrivalTime
+      originRealm {
+        realmId
+        longitude
+        latitude
+      }
+      locationRealm {
+        realmId
+        longitude
+        latitude
+      }
+      destinationRealm {
+        realmId
+        longitude
+        latitude
+      }
     }
   }
-}
-    ${TravelFragmentFragmentDoc}`;
+  ${TravelFragmentFragmentDoc}
+`;
 
 /**
  * __useGetTravelsQuery__
@@ -3299,25 +4673,46 @@ export const GetTravelsDocument = gql`
  *   },
  * });
  */
-export function useGetTravelsQuery(baseOptions?: Apollo.QueryHookOptions<GetTravelsQuery, GetTravelsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTravelsQuery, GetTravelsQueryVariables>(GetTravelsDocument, options);
-      }
-export function useGetTravelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTravelsQuery, GetTravelsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTravelsQuery, GetTravelsQueryVariables>(GetTravelsDocument, options);
-        }
-export type GetTravelsQueryHookResult = ReturnType<typeof useGetTravelsQuery>;
-export type GetTravelsLazyQueryHookResult = ReturnType<typeof useGetTravelsLazyQuery>;
-export type GetTravelsQueryResult = Apollo.QueryResult<GetTravelsQuery, GetTravelsQueryVariables>;
-export const GetTokenBalancesDocument = gql`
-    query GetTokenBalances($address: String!) @api(name: starkIndexer) {
-  tokenBalances(address: $address) {
-    tokenId
-    amount
-  }
+export function useGetTravelsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTravelsQuery,
+    GetTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTravelsQuery, GetTravelsQueryVariables>(
+    GetTravelsDocument,
+    options
+  );
 }
-    `;
+export function useGetTravelsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTravelsQuery,
+    GetTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetTravelsQuery, GetTravelsQueryVariables>(
+    GetTravelsDocument,
+    options
+  );
+}
+export type GetTravelsQueryHookResult = ReturnType<typeof useGetTravelsQuery>;
+export type GetTravelsLazyQueryHookResult = ReturnType<
+  typeof useGetTravelsLazyQuery
+>;
+export type GetTravelsQueryResult = Apollo.QueryResult<
+  GetTravelsQuery,
+  GetTravelsQueryVariables
+>;
+export const GetTokenBalancesDocument = gql`
+  query GetTokenBalances($address: String!) @api(name: starkIndexer) {
+    tokenBalances(address: $address) {
+      tokenId
+      amount
+    }
+  }
+`;
 
 /**
  * __useGetTokenBalancesQuery__
@@ -3335,14 +4730,37 @@ export const GetTokenBalancesDocument = gql`
  *   },
  * });
  */
-export function useGetTokenBalancesQuery(baseOptions: Apollo.QueryHookOptions<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>(GetTokenBalancesDocument, options);
-      }
-export function useGetTokenBalancesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>(GetTokenBalancesDocument, options);
-        }
-export type GetTokenBalancesQueryHookResult = ReturnType<typeof useGetTokenBalancesQuery>;
-export type GetTokenBalancesLazyQueryHookResult = ReturnType<typeof useGetTokenBalancesLazyQuery>;
-export type GetTokenBalancesQueryResult = Apollo.QueryResult<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>;
+export function useGetTokenBalancesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetTokenBalancesQuery,
+    GetTokenBalancesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>(
+    GetTokenBalancesDocument,
+    options
+  );
+}
+export function useGetTokenBalancesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTokenBalancesQuery,
+    GetTokenBalancesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetTokenBalancesQuery,
+    GetTokenBalancesQueryVariables
+  >(GetTokenBalancesDocument, options);
+}
+export type GetTokenBalancesQueryHookResult = ReturnType<
+  typeof useGetTokenBalancesQuery
+>;
+export type GetTokenBalancesLazyQueryHookResult = ReturnType<
+  typeof useGetTokenBalancesLazyQuery
+>;
+export type GetTokenBalancesQueryResult = Apollo.QueryResult<
+  GetTokenBalancesQuery,
+  GetTokenBalancesQueryVariables
+>;

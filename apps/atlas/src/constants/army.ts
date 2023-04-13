@@ -137,6 +137,10 @@ export const defaultArmy: Army = {
   mageQty: 0,
   realmId: 0,
   xp: 0,
+  orderId: 0,
+  bastionArrivalBlock: 0,
+  bastionCurrentLocation: 0,
+  bastionPastLocation: 0,
 };
 
 export const battalionIdToString = (id: BattalionIds) => {

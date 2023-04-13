@@ -1,9 +1,8 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { BiCurrentLocation } from 'react-icons/bi';
-import { locationNames, moveOptions } from '@/constants/bastion';
+import { locationNames } from '@/constants/bastion';
 import { useBastionContext } from '@/context/BastionContext';
-import type { Bastion } from 'mockup/bastionsData';
+import type { Bastion } from '@/generated/graphql';
 import { getBastionLocation, getMoveTimes } from './BastionGetters';
 
 export const DropDownMove = (props) => {

@@ -107,6 +107,10 @@ export const ArmyBuilder = (props: Props) => {
       mageQty: blankArmy.mageQty,
       realmId: blankArmy.realmId,
       xp: blankArmy.xp,
+      bastionArrivalBlock: blankArmy.bastionArrivalBlock,
+      bastionPastLocation: blankArmy.bastionPastLocation,
+      bastionCurrentLocation: blankArmy.bastionCurrentLocation,
+      orderId: blankArmy.orderId,
     };
   }
 

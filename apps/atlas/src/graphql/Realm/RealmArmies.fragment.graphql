@@ -3,6 +3,7 @@ fragment RealmArmiesFragment on Realm {
     armyId
     realmId
     bastionId
+    orderId
     xp
     destinationRealmId
     destinationArrivalTime
@@ -30,5 +31,10 @@ fragment RealmArmiesFragment on Realm {
     lightInfantryHealth
     heavyInfantryQty
     heavyInfantryHealth
+
+    # bastion
+    bastionArrivalBlock
+    bastionCurrentLocation
+    bastionPastLocation
   }
 }
