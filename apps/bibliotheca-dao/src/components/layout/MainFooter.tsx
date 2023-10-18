@@ -34,7 +34,7 @@ export const MainFooter = () => {
       link: (
         <a
           className={footerHREFStyles}
-          href={'https://old.biblioithecadao.xyz'}
+          href={'https://old.bibliothecadao.xyz'}
         >
           Old Bibliotheca DAO site
         </a>
