@@ -87,7 +87,7 @@ Packages are common libraries that can be included in apps.
 
 ### Shared static assets
 
-**[static](./static)** - A dedicated folder at the root level for statuc asstets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
+**[static](./static)** - A dedicated folder at the root level for static assets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
 
 ### Folder overview
 
