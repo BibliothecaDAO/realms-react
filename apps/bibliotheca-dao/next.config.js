@@ -88,7 +88,6 @@ const nextConfig = {
   },
 
   experimental: {
-    legacyBrowsers: false,
     // React 18 server components
     // @link https://nextjs.org/docs/advanced-features/react-18/server-components
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
