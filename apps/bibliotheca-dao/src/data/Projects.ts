@@ -5,7 +5,7 @@ export const links = [
     github: 'https://github.com/BibliothecaDAO',
     twitterRealms: 'https://twitter.com/LootRealms',
     twitterBiblio: 'https://twitter.com/BibliothecaDAO',
-    website: 'https://atlas.bibliothecadao.xyz',
+    website: 'https://realms.world',
     snapshot: 'https://snapshot.org/#/council.bibliotheca.eth',
     scroll: 'https://scroll.bibliothecadao.xyz/',
     staking: 'https://staking.bibliothecadao.xyz/',
