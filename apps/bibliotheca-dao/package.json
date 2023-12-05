@@ -131,7 +131,7 @@
     "heroicons": "^2.0.14",
     "lodash": "4.17.21",
     "markdown-to-jsx": "7.1.9",
-    "next": "13.1.6",
+    "next": "^14.0.3",
     "next-auth": "^4.19.0",
     "next-seo": "5.15.0",
     "picocolors": "1.0.0",
