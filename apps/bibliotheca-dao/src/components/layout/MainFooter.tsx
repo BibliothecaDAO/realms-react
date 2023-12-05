@@ -5,7 +5,7 @@ import { links } from '@/data/Projects';
 
 const footerLinkStyles = 'hover:font-semibold';
 
-const footerHREFStyles = 'hover:border-b-4 border-gray-900/10  ';
+const footerHREFStyles = 'hover:border-b-4 border-gray-900/10';
 
 export const MainFooter = () => {
   const daoLink: any = [
