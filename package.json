@@ -59,7 +59,6 @@
     "cross-env": "7.0.3"
   },
   "devDependencies": {
-    "@bibliotheca-dao/eslint-config-bases": "workspace:^",
     "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.26.0",
     "@commitlint/cli": "17.4.2",

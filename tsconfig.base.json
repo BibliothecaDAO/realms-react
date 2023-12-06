@@ -13,5 +13,8 @@
     "incremental": true,
     "newLine": "lf"
   },
+  "paths": {
+    "@/*": ["src/*"] // Adjust the path as needed
+  },
   "exclude": ["**/node_modules", "**/.*/"]
 }
